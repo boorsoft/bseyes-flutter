@@ -13,6 +13,6 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         home: Home(),
         theme: ThemeData(
-            primaryColor: Colors.limeAccent, backgroundColor: Colors.white24));
+            primaryColor: Colors.limeAccent, backgroundColor: Colors.white));
   }
 }
