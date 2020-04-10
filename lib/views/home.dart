@@ -41,48 +41,60 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: <Widget>[
-            Stack(children: <Widget>[
-              Container(
-                  height: 200.0,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/bg.jpg"),
-                          fit: BoxFit.cover))),
-              Container(
-                  alignment: Alignment.center,
-                  height: 200.0,
-                  child: Center(
-                      child: Text("ВЫБЕРИТЕ ПРЕДМЕТ",
-                          style: bgTextStyle, textAlign: TextAlign.center))),
-            ]),
-            Expanded(
-                child: Container(
-                    transform: Matrix4.translationValues(0, -20.0, 0),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25.0),
-                            topRight: Radius.circular(25.0)),
+        body: FutureBuilder(
+            future: getSubjects(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: <Widget>[
+                    Stack(children: <Widget>[
+                      Container(
+                          height: 200.0,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("assets/images/bg.jpg"),
+                                  fit: BoxFit.cover))),
+                      Container(
+                          alignment: Alignment.center,
+                          height: 200.0,
+                          child: Center(
+                              child: Text("ВЫБЕРИТЕ ПРЕДМЕТ",
+                                  style: bgTextStyle,
+                                  textAlign: TextAlign.center))),
+                    ]),
+                    Expanded(
                         child: Container(
-                          color: Colors.white,
-                          child: ListView.builder(
-                              itemCount: subjects.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                    padding:
-                                        EdgeInsets.only(left: 5.0, right: 5.0),
-                                    height: 70.0,
-                                    child: Center(
-                                      child: Text(
-                                        subjects[index]['sub_name'],
-                                        style: defaultTextStyle,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ));
-                              }),
-                        )))),
-          ],
-        ));
+                            transform: Matrix4.translationValues(0, -20.0, 0),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0)),
+                                child: Container(
+                                  color: Colors.white,
+                                  child: ListView.builder(
+                                      itemCount: subjects.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                            padding: EdgeInsets.only(
+                                                left: 5.0, right: 5.0),
+                                            height: 70.0,
+                                            child: Center(
+                                              child: Text(
+                                                subjects[index]['sub_name'],
+                                                style: defaultTextStyle,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ));
+                                      }),
+                                )))),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Не удалось загрузить данные...'));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }));
   }
 }
