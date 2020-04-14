@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../style.dart';
+import 'teachers.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,9 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String subjectsUrl = "https://bseyes-restapi--akmatoff.repl.co/api/subjects";
-  String teachersUrl = "https://bseyes-restapi--akmatoff.repl.co/api/teachers";
   List subjects;
-  List teachers;
 
   @override
   void initState() {
@@ -24,13 +23,9 @@ class _HomeState extends State<Home> {
     var subjectsResponse = await http.get(Uri.encodeFull(subjectsUrl),
         headers: {"Accept": "application/json"});
 
-    var teachersResponse = await http.get(Uri.encodeFull(teachersUrl),
-        headers: {"Accept": "application/json"});
-
     setState(() {
       if (subjectsResponse.statusCode == 200) {
         subjects = json.decode(utf8.decode(subjectsResponse.bodyBytes));
-        teachers = json.decode(utf8.decode(teachersResponse.bodyBytes));
       }
     });
 
@@ -75,17 +70,26 @@ class _HomeState extends State<Home> {
                                       itemCount: subjects.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return Container(
-                                            padding: EdgeInsets.only(
-                                                left: 5.0, right: 5.0),
-                                            height: 70.0,
-                                            child: Center(
-                                              child: Text(
-                                                subjects[index]['sub_name'],
-                                                style: defaultTextStyle,
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ));
+                                        return GestureDetector(
+                                            onTap: () => Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Teachers(
+                                                          subjectID:
+                                                              subjects[index]
+                                                                  ['sub_id'],
+                                                        ))),
+                                            child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.0,
+                                                    vertical: 15.0),
+                                                height: 60.0,
+                                                child: Center(
+                                                    child: Text(
+                                                        subjects[index]
+                                                            ['sub_name'],
+                                                        style:
+                                                            defaultTextStyle))));
                                       }),
                                 )))),
                   ],
@@ -93,7 +97,15 @@ class _HomeState extends State<Home> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Не удалось загрузить данные...'));
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                      Center(child: CircularProgressIndicator()),
+                      SizedBox(height: 30.0),
+                      Center(child: Text('Идёт загрузка данных...'))
+                    ]));
               }
             }));
   }
