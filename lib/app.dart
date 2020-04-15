@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'views/home.dart';
+import 'views/subjects.dart';
 
 class App extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Home(),
+        home: Subjects(),
         theme: ThemeData(
             primaryColor: Colors.limeAccent, backgroundColor: Colors.white));
   }
