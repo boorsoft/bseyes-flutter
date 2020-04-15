@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Teachers extends StatelessWidget {
   final Subject subject;
 
-  const Teachers({@required this.subject});
+  Teachers({@required this.subject});
 
   @override
   Widget build(BuildContext context) {

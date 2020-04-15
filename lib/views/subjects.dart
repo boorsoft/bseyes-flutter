@@ -1,24 +1,31 @@
 import 'package:bseyes_flutter/models/subject_model.dart';
+import 'package:bseyes_flutter/services/subjects_service.dart';
 import 'package:bseyes_flutter/style.dart';
 import 'package:bseyes_flutter/views/teachers.dart';
 import 'package:flutter/material.dart';
 
-import '../http_service.dart';
-
 class Subjects extends StatelessWidget {
-  final HttpService httpService = HttpService();
+  final SubjectsService subjectsService =
+      SubjectsService(); // Создаем новый объект класса SubjectsService
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder(
-            future: httpService.getSubjects(),
+            // FutureBuilder - штука которая из Future функции строит контекст
+            future: subjectsService
+                .getSubjects(), // Из объекта класса subjectsService вызываем Future функцию getSubjects(), которая возвращает список
             builder:
                 (BuildContext context, AsyncSnapshot<List<Subject>> snapshot) {
+              // snapshot - типа есть данные
               if (snapshot.hasData) {
-                List<Subject> subjects = snapshot.data;
+                // Если в снапшоте есть данные
+                List<Subject> subjects = snapshot
+                    .data; // Создаем список и присваиваем данные snapshot
                 return Column(
                   children: <Widget>[
+                    // Картинка сверху с надписем
+                    // Элементы в Stack накладываются друг на друга, в отличие от Column
                     Stack(
                       children: <Widget>[
                         Container(
@@ -41,18 +48,23 @@ class Subjects extends StatelessWidget {
                     ),
                     Expanded(
                         child: Container(
-                            transform: Matrix4.translationValues(0, -20.0, 0),
+                            transform: Matrix4.translationValues(
+                                0, -20.0, 0), // Поднимаем контейнер выше
                             child: ClipRRect(
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(25.0),
                                     topRight: Radius.circular(25.0)),
                                 child: Container(
                                     color: Colors.white,
+                                    // Эта штука работает типа как for
                                     child: ListView.builder(
-                                        itemCount: subjects.length,
+                                        itemCount: subjects
+                                            .length, // количество элементов = размер списка subjects
                                         itemBuilder:
                                             (BuildContext context, int i) {
+                                          // строим контекст и создаем переменную i для обозначения индексов элементов
                                           return GestureDetector(
+                                              // При нажатии переходим в класс(страницу) Teachers и аргументом передаем элемент списка
                                               onTap: () => Navigator.of(context)
                                                   .push(MaterialPageRoute(
                                                       builder: (context) =>
@@ -66,6 +78,7 @@ class Subjects extends StatelessWidget {
                                                       vertical: 15.0),
                                                   height: 60.0,
                                                   child: Center(
+                                                    // Выводим название предмета
                                                     child: Text(
                                                         subjects[i].subName),
                                                   )));
@@ -73,10 +86,12 @@ class Subjects extends StatelessWidget {
                   ],
                 );
               } else if (snapshot.hasError) {
+                // Если возникла ошибка
                 return Center(
                   child: Text('Не удалось загрузить данные...'),
                 );
               } else {
+                // Если данные еще не загрузились
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
