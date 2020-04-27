@@ -56,6 +56,7 @@ class Subjects extends StatelessWidget {
                                     topRight: Radius.circular(25.0)),
                                 child: Container(
                                     color: Colors.white,
+                                    width: double.infinity,
                                     // Эта штука работает типа как for
                                     child: ListView.builder(
                                         itemCount: subjects
@@ -63,25 +64,21 @@ class Subjects extends StatelessWidget {
                                         itemBuilder:
                                             (BuildContext context, int i) {
                                           // строим контекст и создаем переменную i для обозначения индексов элементов
-                                          return GestureDetector(
-                                              // При нажатии переходим в класс(страницу) Teachers и аргументом передаем элемент списка
+                                          return ListTile(
+                                              title: Text(
+                                                subjects[i].subName,
+                                                style: defaultTextStyle,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              contentPadding:
+                                                  EdgeInsets.all(7.0),
                                               onTap: () => Navigator.of(context)
                                                   .push(MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Teachers(
+                                                          TeachersFutureBuilder(
                                                             subject:
                                                                 subjects[i],
-                                                          ))),
-                                              child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0,
-                                                      vertical: 15.0),
-                                                  height: 60.0,
-                                                  child: Center(
-                                                    // Выводим название предмета
-                                                    child: Text(
-                                                        subjects[i].subName),
-                                                  )));
+                                                          ))));
                                         })))))
                   ],
                 );

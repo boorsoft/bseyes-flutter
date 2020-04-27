@@ -4,24 +4,13 @@ import 'package:bseyes_flutter/models/subject_model.dart';
 import 'package:bseyes_flutter/models/teacher_model.dart';
 import 'package:bseyes_flutter/services/teachers_service.dart';
 
-class Teachers extends StatelessWidget {
-  final Subject subject;
-
-  Teachers({@required this.subject});
-
+class TeachersFutureBuilder extends StatelessWidget {
   final TeachersService teachersService = TeachersService();
 
+  final Subject subject;
   List<Teacher> teachers;
 
-  List<Teacher> sortTeachers() {
-    for (int i = 0; i < teachers.length; i++) {
-      for (int k = 0; k < teachers[i].subject.length; k++) {
-        if (teachers[i].subject[k] == subject.subjectID) {}
-      }
-    }
-
-    return teachers;
-  }
+  TeachersFutureBuilder({this.subject});
 
   @override
   Widget build(BuildContext context) {
@@ -32,75 +21,7 @@ class Teachers extends StatelessWidget {
                 (BuildContext context, AsyncSnapshot<List<Teacher>> snapshot) {
               if (snapshot.hasData) {
                 teachers = snapshot.data;
-                sortTeachers();
-                print(teachers);
-                return Column(
-                  children: <Widget>[
-                    Stack(children: <Widget>[
-                      Container(
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/bg2.jpg"),
-                                fit: BoxFit.cover)),
-                      ),
-                      Container(
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                colors: [
-                              Colors.black.withOpacity(0.0),
-                              Colors.black.withOpacity(0.6)
-                            ],
-                                stops: [
-                              0.0,
-                              0.7
-                            ])),
-                      ),
-                      Container(
-                          alignment: Alignment.center,
-                          height: 200.0,
-                          child: Center(
-                              child: Text(
-                            subject.subName,
-                            style: bgTextStyle,
-                            textAlign: TextAlign.center,
-                          )))
-                    ]),
-                    Expanded(
-                        child: Container(
-                            transform: Matrix4.translationValues(
-                                0, -20.0, 0), // Поднимаем контейнер выше
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(25.0),
-                                    topRight: Radius.circular(25.0)),
-                                child: Container(
-                                    color: Colors.white,
-                                    // Эта штука работает типа как for
-                                    child: ListView.builder(
-                                        itemCount: teachers.length,
-                                        itemBuilder:
-                                            (BuildContext context, int i) {
-                                          // строим контекст и создаем переменную i для обозначения индексов элементов
-                                          return GestureDetector(
-                                              child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0,
-                                                      vertical: 15.0),
-                                                  height: 60.0,
-                                                  child: Center(
-                                                    // Выводим название предмета
-                                                    child: Text(teachers[i]
-                                                            .firstName +
-                                                        " " +
-                                                        teachers[i].lastName),
-                                                  )));
-                                        })))))
-                  ],
-                );
+                return Teachers(subject: subject, teachers: teachers);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(
@@ -119,5 +40,103 @@ class Teachers extends StatelessWidget {
                 );
               }
             }));
+  }
+}
+
+class Teachers extends StatefulWidget {
+  final Subject subject;
+  final List<Teacher> teachers;
+
+  Teachers({@required this.subject, this.teachers});
+
+  @override
+  TeachersState createState() => TeachersState();
+}
+
+class TeachersState extends State<Teachers> {
+  var subTeachers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    sortTeachers();
+  }
+
+  void sortTeachers() {
+    for (int i = 0; i < widget.teachers.length; i++) {
+      for (int k = 0; k < widget.teachers[i].subject.length; k++) {
+        if (widget.teachers[i].subject[k] == widget.subject.subjectID) {
+          subTeachers.add(widget.teachers[i].firstName +
+              " " +
+              widget.teachers[i].middleName);
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Column(
+      children: <Widget>[
+        Stack(children: <Widget>[
+          Container(
+            height: 200.0,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/bg2.jpg"),
+                    fit: BoxFit.cover)),
+          ),
+          Container(
+            height: 200.0,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    colors: [
+                  Colors.black.withOpacity(0.0),
+                  Colors.black.withOpacity(0.6)
+                ],
+                    stops: [
+                  0.0,
+                  0.7
+                ])),
+          ),
+          Container(
+              alignment: Alignment.center,
+              height: 200.0,
+              child: Center(
+                  child: Text(
+                widget.subject.subName,
+                style: bgTextStyle,
+                textAlign: TextAlign.center,
+              )))
+        ]),
+        Expanded(
+            child: Container(
+                transform: Matrix4.translationValues(
+                    0, -20.0, 0), // Поднимаем контейнер выше
+                child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.0),
+                        topRight: Radius.circular(25.0)),
+                    child: Container(
+                        color: Colors.white,
+                        // Эта штука работает типа как for
+                        child: ListView.builder(
+                            itemCount: subTeachers.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              // строим контекст и создаем переменную i для обозначения индексов элементов
+                              return ListTile(
+                                title: Text(
+                                  subTeachers[i],
+                                  style: defaultTextStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                                contentPadding: EdgeInsets.all(7.0),
+                              );
+                            })))))
+      ],
+    ));
   }
 }

@@ -12,7 +12,7 @@ const bgTextStyle = TextStyle(
     ]);
 
 const defaultTextStyle = TextStyle(
-    color: Colors.black,
+    color: Colors.black87,
     fontFamily: 'San Francisco',
-    fontSize: 17.0,
+    fontSize: 16.0,
     fontWeight: FontWeight.normal);
