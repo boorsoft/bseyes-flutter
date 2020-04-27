@@ -5,22 +5,26 @@ import 'package:bseyes_flutter/models/teacher_model.dart';
 import 'package:bseyes_flutter/services/teachers_service.dart';
 
 class TeachersFutureBuilder extends StatelessWidget {
+  // Объект класса сервиса преподавателей
   final TeachersService teachersService = TeachersService();
 
   final Subject subject;
   List<Teacher> teachers;
 
+  // Конструктор для получения предмета с subjects.dart
   TeachersFutureBuilder({this.subject});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // Получаем данные с сервиса (API)
         body: FutureBuilder(
             future: teachersService.getTeachers(),
             builder:
                 (BuildContext context, AsyncSnapshot<List<Teacher>> snapshot) {
               if (snapshot.hasData) {
                 teachers = snapshot.data;
+                // Возвращаем класс Teachers, где весь UI и передаем данные
                 return Teachers(subject: subject, teachers: teachers);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
@@ -47,6 +51,7 @@ class Teachers extends StatefulWidget {
   final Subject subject;
   final List<Teacher> teachers;
 
+  // Конструктор для получения данных с TeachersFutureBuilder
   Teachers({@required this.subject, this.teachers});
 
   @override
@@ -54,7 +59,7 @@ class Teachers extends StatefulWidget {
 }
 
 class TeachersState extends State<Teachers> {
-  var subTeachers = [];
+  var subTeachers = []; // Список с преподавателями определенного предмета
 
   @override
   void initState() {
@@ -62,6 +67,7 @@ class TeachersState extends State<Teachers> {
     sortTeachers();
   }
 
+  // Функция для сортировки преподавателей по предметам
   void sortTeachers() {
     for (int i = 0; i < widget.teachers.length; i++) {
       for (int k = 0; k < widget.teachers[i].subject.length; k++) {
