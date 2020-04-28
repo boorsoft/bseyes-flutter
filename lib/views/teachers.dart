@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bseyes_flutter/models/subject_model.dart';
 import 'package:bseyes_flutter/models/teacher_model.dart';
 import 'package:bseyes_flutter/services/teachers_service.dart';
+import 'poll.dart';
 
 class TeachersFutureBuilder extends StatelessWidget {
   // Объект класса сервиса преподавателей
@@ -131,15 +132,21 @@ class TeachersState extends State<Teachers> {
                             itemBuilder: (BuildContext context, int i) {
                               // строим контекст и создаем переменную i для обозначения индексов элементов
                               return ListTile(
-                                title: Text(
-                                  subTeachers[i].firstName +
-                                      " " +
-                                      subTeachers[i].middleName,
-                                  style: defaultTextStyle,
-                                  textAlign: TextAlign.center,
-                                ),
-                                contentPadding: EdgeInsets.all(7.0),
-                              );
+                                  title: Text(
+                                    subTeachers[i].firstName +
+                                        " " +
+                                        subTeachers[i].middleName,
+                                    style: defaultTextStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  contentPadding: EdgeInsets.all(7.0),
+                                  onTap: () => Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PollsFutureBuilder(
+                                                subject: widget.subject,
+                                                teacher: subTeachers[i],
+                                              ))));
                             })))))
       ],
     ));
