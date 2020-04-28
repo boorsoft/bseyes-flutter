@@ -59,7 +59,7 @@ class Teachers extends StatefulWidget {
 }
 
 class TeachersState extends State<Teachers> {
-  var subTeachers = []; // Список с преподавателями определенного предмета
+  List<Teacher> subTeachers = [];
 
   @override
   void initState() {
@@ -68,16 +68,13 @@ class TeachersState extends State<Teachers> {
   }
 
   // Функция для сортировки преподавателей по предметам
-  void sortTeachers() {
+  List<Teacher> sortTeachers() {
     for (int i = 0; i < widget.teachers.length; i++) {
-      for (int k = 0; k < widget.teachers[i].subject.length; k++) {
-        if (widget.teachers[i].subject[k] == widget.subject.subjectID) {
-          subTeachers.add(widget.teachers[i].firstName +
-              " " +
-              widget.teachers[i].middleName);
-        }
+      if (widget.teachers[i].subject.contains(widget.subject.subjectID)) {
+        subTeachers.add(widget.teachers[i]);
       }
     }
+    return subTeachers;
   }
 
   @override
@@ -135,7 +132,9 @@ class TeachersState extends State<Teachers> {
                               // строим контекст и создаем переменную i для обозначения индексов элементов
                               return ListTile(
                                 title: Text(
-                                  subTeachers[i],
+                                  subTeachers[i].firstName +
+                                      " " +
+                                      subTeachers[i].middleName,
                                   style: defaultTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
