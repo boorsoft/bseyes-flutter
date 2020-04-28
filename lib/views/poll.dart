@@ -22,7 +22,8 @@ class PollsFutureBuilder extends StatelessWidget {
                 (BuildContext context, AsyncSnapshot<List<Question>> snapshot) {
               if (snapshot.hasData) {
                 questions = snapshot.data;
-                return Poll(subject: subject, teacher: teacher);
+                return Poll(
+                    subject: subject, teacher: teacher, questions: questions);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(
@@ -47,8 +48,9 @@ class PollsFutureBuilder extends StatelessWidget {
 class Poll extends StatefulWidget {
   final Subject subject;
   final Teacher teacher;
+  final List<Question> questions;
 
-  Poll({this.subject, this.teacher});
+  Poll({this.subject, this.teacher, this.questions});
 
   @override
   PollState createState() => PollState();
