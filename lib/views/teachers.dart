@@ -137,9 +137,9 @@ class TeachersState extends State<Teachers> {
                                         " " +
                                         subTeachers[i].middleName,
                                     style: defaultTextStyle,
-                                    textAlign: TextAlign.center,
                                   ),
-                                  contentPadding: EdgeInsets.all(7.0),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 7.0, horizontal: 30.0),
                                   onTap: () => Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) =>

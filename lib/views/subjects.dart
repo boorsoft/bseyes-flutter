@@ -49,7 +49,7 @@ class Subjects extends StatelessWidget {
                     Expanded(
                         child: Container(
                             transform: Matrix4.translationValues(
-                                0, -20.0, 0), // Поднимаем контейнер выше
+                                0, -22.0, 0), // Поднимаем контейнер выше
                             child: ClipRRect(
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(25.0),
@@ -68,10 +68,11 @@ class Subjects extends StatelessWidget {
                                               title: Text(
                                                 subjects[i].subName,
                                                 style: defaultTextStyle,
-                                                textAlign: TextAlign.center,
                                               ),
                                               contentPadding:
-                                                  EdgeInsets.all(7.0),
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 7.0,
+                                                      horizontal: 30.0),
                                               onTap: () => Navigator.of(context)
                                                   .push(MaterialPageRoute(
                                                       builder: (context) =>

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'views/home.dart';
 import 'views/subjects.dart';
+import 'style.dart';
 
 class App extends StatefulWidget {
   @override
@@ -14,6 +15,6 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         home: Subjects(),
         theme: ThemeData(
-            primaryColor: Colors.limeAccent, backgroundColor: Colors.white));
+            primaryColor: primaryColor, backgroundColor: Colors.white));
   }
 }
