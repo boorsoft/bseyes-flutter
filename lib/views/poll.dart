@@ -150,7 +150,7 @@ class PollState extends State<Poll> {
                       child: Text(widget.questions[qNum].question,
                           style: defaultTextStyle),
                     ),
-                    SizedBox(height: 50.0),
+                    SizedBox(height: 70.0),
                     Container(
                         padding: EdgeInsets.all(5.0),
                         child: Text(

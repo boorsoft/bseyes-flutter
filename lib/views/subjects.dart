@@ -68,6 +68,7 @@ class Subjects extends StatelessWidget {
                                               title: Text(
                                                 subjects[i].subName,
                                                 style: defaultTextStyle,
+                                                textAlign: TextAlign.center,
                                               ),
                                               contentPadding:
                                                   EdgeInsets.symmetric(
