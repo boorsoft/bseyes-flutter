@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const primaryColor = Color(0xFF68b399);
 const splashColor = Color(0xFF488570);
+const disabledColor = Color(0xFFE5E5E5);
 
 const bgTextStyle = TextStyle(
     color: Colors.white,

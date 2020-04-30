@@ -61,6 +61,7 @@ class Poll extends StatefulWidget {
 class PollState extends State<Poll> {
   int qNum = 0;
   Color displayColor = primaryColor;
+  bool choiceMade = false;
 
   Map<String, bool> buttons = {
     "1": false,
@@ -77,9 +78,17 @@ class PollState extends State<Poll> {
 
   void nextQuestion() {
     setState(() {
-      if (qNum < widget.questions.length) {
-        qNum++;
-      } else {}
+      if (choiceMade) {
+        if (qNum < widget.questions.length) {
+          qNum++;
+        } else {}
+      }
+      buttons["1"] = false;
+      buttons["2"] = false;
+      buttons["3"] = false;
+      buttons["4"] = false;
+      buttons["5"] = false;
+      choiceMade = false;
     });
   }
 
@@ -91,6 +100,7 @@ class PollState extends State<Poll> {
       buttons["4"] = false;
       buttons["5"] = false;
       buttons[option] = true;
+      choiceMade = true;
     });
   }
 
@@ -106,6 +116,22 @@ class PollState extends State<Poll> {
               color: !buttons[option] ? primaryColor : splashColor,
               splashColor: splashColor,
             )));
+  }
+
+  Widget nextButton() {
+    if (choiceMade) {
+      return ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+          child: MaterialButton(
+              child: Text('Дальше', style: defaultTextStyleBold),
+              onPressed: () => nextQuestion(),
+              minWidth: 80.0,
+              disabledColor: disabledColor,
+              color: Theme.of(context).primaryColor,
+              splashColor: splashColor));
+    } else {
+      return SizedBox();
+    }
   }
 
   @override
@@ -143,14 +169,7 @@ class PollState extends State<Poll> {
                       ],
                     ),
                     SizedBox(height: 50.0),
-                    ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(18.0)),
-                        child: MaterialButton(
-                            child: Text('Дальше', style: defaultTextStyleBold),
-                            onPressed: () => nextQuestion(),
-                            minWidth: 80.0,
-                            color: Theme.of(context).primaryColor,
-                            splashColor: splashColor))
+                    nextButton()
                   ],
                 ))));
   }
