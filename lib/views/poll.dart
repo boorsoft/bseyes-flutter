@@ -60,12 +60,37 @@ class Poll extends StatefulWidget {
 
 class PollState extends State<Poll> {
   int qNum = 0;
+  Color displayColor = primaryColor;
+
+  Map<String, bool> buttons = {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false,
+    "5": false
+  };
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void nextQuestion() {
     setState(() {
       if (qNum < widget.questions.length) {
         qNum++;
       } else {}
+    });
+  }
+
+  void chooseOption(String option) {
+    setState(() {
+      buttons["1"] = false;
+      buttons["2"] = false;
+      buttons["3"] = false;
+      buttons["4"] = false;
+      buttons["5"] = false;
+      buttons[option] = true;
     });
   }
 
@@ -76,9 +101,9 @@ class PollState extends State<Poll> {
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
             child: MaterialButton(
               child: Text(option, style: defaultTextStyleBold),
-              onPressed: () => {},
+              onPressed: () => chooseOption(option),
               minWidth: 40.0,
-              color: Theme.of(context).primaryColor,
+              color: !buttons[option] ? primaryColor : splashColor,
               splashColor: splashColor,
             )));
   }
@@ -86,12 +111,13 @@ class PollState extends State<Poll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Опрос', style: headerTextStyle)),
+        // appBar: AppBar(title: Text('Опрос', style: headerTextStyle)),
         body: SingleChildScrollView(
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   children: <Widget>[
+                    SizedBox(height: 50.0),
                     Container(
                       alignment: Alignment.center,
                       constraints: BoxConstraints(minHeight: 150.0),
