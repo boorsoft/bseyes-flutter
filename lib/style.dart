@@ -27,6 +27,12 @@ const defaultTextStyleBold = TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.bold);
 
+const headingTextStyle = TextStyle(
+    color: Colors.black87,
+    fontFamily: 'San Francisco',
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold);
+
 const headerTextStyle = TextStyle(
     color: Colors.white,
     fontFamily: 'San Francisco',
