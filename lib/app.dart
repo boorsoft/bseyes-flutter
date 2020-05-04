@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/home.dart';
+import 'views/login.dart';
 import 'views/subjects.dart';
 import 'style.dart';
 
@@ -13,7 +13,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Home(),
+        home: Login(),
         theme: ThemeData(
             primaryColor: primaryColor, backgroundColor: Colors.white));
   }

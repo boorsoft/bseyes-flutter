@@ -1,7 +1,21 @@
-import 'package:bseyes_flutter/style.dart';
 import 'package:flutter/material.dart';
+import 'package:bseyes_flutter/style.dart';
+import 'subjects.dart';
 
-class Home extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  LoginState createState() => LoginState();
+}
+
+class LoginState extends State<Login> {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  logIn(String username, String password) async {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) => Subjects()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +43,7 @@ class Home extends StatelessWidget {
                           SizedBox(height: 20.0),
                           Container(
                               child: TextField(
+                                  controller: usernameController,
                                   decoration: InputDecoration(
                                       labelText: 'Введите логин...',
                                       focusedBorder: OutlineInputBorder(
@@ -54,6 +69,7 @@ class Home extends StatelessWidget {
                         SizedBox(height: 20.0),
                         Container(
                             child: TextField(
+                                controller: passwordController,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     labelText: 'Введите пароль...',
@@ -75,7 +91,8 @@ class Home extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 0, vertical: 15.0),
                       child: RaisedButton(
-                        onPressed: () => print('Button pressed!'),
+                        onPressed: () => logIn(
+                            usernameController.text, passwordController.text),
                         padding: EdgeInsets.all(10.0),
                         color: Colors.black87,
                         shape: RoundedRectangleBorder(

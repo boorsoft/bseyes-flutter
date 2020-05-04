@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xFF68b399);
-const splashColor = Color(0xFF488570);
+const Color primaryColor = Color(0xFF222222);
+const splashColor = Color(0xFF555555);
 const disabledColor = Color(0xFFE5E5E5);
 
 const bgTextStyle = TextStyle(
@@ -23,6 +23,12 @@ const defaultTextStyle = TextStyle(
 
 const defaultTextStyleBold = TextStyle(
     color: Colors.black87,
+    fontFamily: 'San Francisco',
+    fontSize: 16.0,
+    fontWeight: FontWeight.bold);
+
+const defaultTextStyleWhiteBold = TextStyle(
+    color: Colors.white,
     fontFamily: 'San Francisco',
     fontSize: 16.0,
     fontWeight: FontWeight.bold);

@@ -110,7 +110,7 @@ class PollState extends State<Poll> {
         child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
             child: MaterialButton(
-              child: Text(option, style: defaultTextStyleBold),
+              child: Text(option, style: defaultTextStyleWhiteBold),
               onPressed: () => chooseOption(option),
               minWidth: 40.0,
               color: !buttons[option] ? primaryColor : splashColor,
@@ -123,7 +123,7 @@ class PollState extends State<Poll> {
       return ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(18.0)),
           child: MaterialButton(
-              child: Text('Дальше', style: defaultTextStyleBold),
+              child: Text('Дальше', style: defaultTextStyleWhiteBold),
               onPressed: () => nextQuestion(),
               minWidth: 80.0,
               disabledColor: disabledColor,
