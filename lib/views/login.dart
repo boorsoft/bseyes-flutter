@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:bseyes_flutter/style.dart';
 import 'subjects.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   @override
@@ -14,6 +17,15 @@ class LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
 
   logIn(String username, String password) async {
+    Map data = {
+      "username": username,
+      "password": password
+    };
+    var res = await http.post("https://bseyes-restapi.akmatoff.repl.co/login/", body: data);
+    var jsonData;
+    if (res.statusCode == 200){
+      jsonData = jsonDecode(utf8.decode(res.bodyBytes));
+    }
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print(username + "," + password);
