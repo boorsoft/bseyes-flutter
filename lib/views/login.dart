@@ -17,6 +17,8 @@ class LoginState extends State<Login> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print(username + "," + password);
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => Subjects()));
     } else {
       print('Ошибка');
     }

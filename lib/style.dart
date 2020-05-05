@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColor = Color(0xFF222222);
+const primaryColor = Color(0xFF222222);
 const splashColor = Color(0xFF555555);
 const disabledColor = Color(0xFFE5E5E5);
 
