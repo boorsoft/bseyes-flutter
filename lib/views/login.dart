@@ -1,11 +1,50 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:bseyes_flutter/services/students_service.dart';
 import 'package:bseyes_flutter/style.dart';
 import 'subjects.dart';
-import 'package:http/http.dart' as http;
+import '../models/student_model.dart';
+
+class LoginFutureBuilder extends StatelessWidget {
+  final StudentsService studentsService = StudentsService();
+
+  List<Student> students;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: FutureBuilder(
+            future: studentsService.getStudents(),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
+              if (snapshot.hasData) {
+                students = snapshot.data;
+                return Login(students: students);
+              } else if (snapshot.hasError) {
+                // Если возникла ошибка
+                return Center(
+                  child: Text('Не удалось загрузить данные...'),
+                );
+              } else {
+                // Если данные еще не загрузились
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Center(child: CircularProgressIndicator()),
+                  ],
+                );
+              }
+            }));
+  }
+}
 
 class Login extends StatefulWidget {
+  final List<Student> students;
+
+  Login({this.students});
+
   @override
   LoginState createState() => LoginState();
 }
@@ -15,16 +54,37 @@ class LoginState extends State<Login> {
   final passwordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  bool wrongUser = false;
 
   logIn(String username, String password) async {
-    Map data = {"username": username, "password": password};
     if (formKey.currentState.validate()) {
-      formKey.currentState.save();
-      print(username + "," + password);
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => Subjects()));
+      for (int i = 0; i < widget.students.length; i++) {
+        if (widget.students[i].username == username &&
+            widget.students[i].password == password) {
+          formKey.currentState.save();
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (BuildContext context) => Subjects()));
+          break;
+        } else {
+          setState(() {
+            wrongUser = true;
+          });
+        }
+      }
+    }
+  }
+
+  Widget errorMessage() {
+    if (wrongUser) {
+      return Center(
+          child: Container(
+              child: Text('Неверный логин или пароль!',
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontFamily: 'San Francisco',
+                      fontSize: 14.0))));
     } else {
-      print('Ошибка');
+      return SizedBox();
     }
   }
 
@@ -60,7 +120,7 @@ class LoginState extends State<Login> {
                                     child: TextFormField(
                                         controller: usernameController,
                                         validator: (input) => input == ''
-                                            ? 'Это поле обязательное'
+                                            ? 'Это обязательное поле'
                                             : null,
                                         decoration: InputDecoration(
                                             labelText: 'Введите логин...',
@@ -94,7 +154,7 @@ class LoginState extends State<Login> {
                                   child: TextFormField(
                                       controller: passwordController,
                                       validator: (input) => input == ''
-                                          ? 'Это поле обязательное'
+                                          ? 'Это обязательное поле'
                                           : null,
                                       obscureText: true,
                                       decoration: InputDecoration(
@@ -117,6 +177,8 @@ class LoginState extends State<Login> {
                                                   width: 2.0)))))
                             ],
                           ),
+                          SizedBox(height: 15.0),
+                          errorMessage(),
                           Container(
                             width: double.infinity,
                             padding: EdgeInsets.symmetric(

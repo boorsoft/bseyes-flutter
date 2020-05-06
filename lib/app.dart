@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'views/login.dart';
-import 'views/subjects.dart';
 import 'style.dart';
 
 class App extends StatefulWidget {
@@ -13,7 +12,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Login(),
+        home: LoginFutureBuilder(),
         theme: ThemeData(
             primaryColor: primaryColor, backgroundColor: Colors.white));
   }
