@@ -22,9 +22,13 @@ class _AppState extends State<App> {
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.getBool("logged_in") == null) {
-      loggedIn = false;
+      setState(() {
+        loggedIn = false;
+      });
     } else {
-      loggedIn = true;
+      setState(() {
+        loggedIn = true;
+      });
     }
   }
 

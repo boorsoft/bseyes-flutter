@@ -43,7 +43,7 @@ class SubjectsState extends State<Subjects> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          height: 200.0,
+                          height: 230.0,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage("assets/images/bg.jpg"),
@@ -51,7 +51,7 @@ class SubjectsState extends State<Subjects> {
                         ),
                         Container(
                             alignment: Alignment.center,
-                            height: 200.0,
+                            height: 230.0,
                             child: Center(
                                 child: Text(
                               'Выберите предмет',
@@ -62,8 +62,7 @@ class SubjectsState extends State<Subjects> {
                           left: 20,
                           top: 30,
                           child: FlatButton(
-                              child: Text('Выйти',
-                                  style: defaultTextStyleWhiteBold),
+                              child: Icon(Icons.arrow_back),
                               onPressed: () {
                                 logOut();
                                 Navigator.of(context).pushAndRemoveUntil(

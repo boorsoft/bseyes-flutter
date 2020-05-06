@@ -58,7 +58,6 @@ class LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    print(widget.students);
   }
 
   logIn(String username, String password) async {
@@ -69,7 +68,7 @@ class LoginState extends State<Login> {
             widget.students[i].password == password) {
           formKey.currentState.save();
           sharedPreferences.setBool("logged_in", true);
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (BuildContext context) => Subjects()));
           setState(() {
             wrongUser = false;
