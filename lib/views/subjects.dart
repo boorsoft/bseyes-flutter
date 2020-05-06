@@ -2,11 +2,34 @@ import 'package:bseyes_flutter/models/subject_model.dart';
 import 'package:bseyes_flutter/services/subjects_service.dart';
 import 'package:bseyes_flutter/style.dart';
 import 'package:bseyes_flutter/views/teachers.dart';
+import 'package:bseyes_flutter/views/login.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Subjects extends StatelessWidget {
+class Subjects extends StatefulWidget {
+  @override
+  SubjectsState createState() => SubjectsState();
+}
+
+class SubjectsState extends State<Subjects> {
+  SharedPreferences sharedPreferences;
   final SubjectsService subjectsService =
       SubjectsService(); // Создаем новый объект класса SubjectsService
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (!sharedPreferences.getBool("logged_in")) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => Login()),
+          (Route<dynamic> route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +66,20 @@ class Subjects extends StatelessWidget {
                               'Выберите предмет',
                               style: bgTextStyle,
                               textAlign: TextAlign.center,
-                            )))
+                            ))),
+                        Positioned(
+                          child: FlatButton(
+                              child: Text('Выйти'),
+                              onPressed: () {
+                                sharedPreferences.clear();
+                                sharedPreferences.commit();
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Login()),
+                                    (Route<dynamic> route) => false);
+                              }),
+                        )
                       ],
                     ),
                     Expanded(

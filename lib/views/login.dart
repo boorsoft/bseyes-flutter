@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bseyes_flutter/services/students_service.dart';
 import 'package:bseyes_flutter/style.dart';
 import 'subjects.dart';
@@ -57,13 +56,18 @@ class LoginState extends State<Login> {
   bool wrongUser = false;
 
   logIn(String username, String password) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (formKey.currentState.validate()) {
       for (int i = 0; i < widget.students.length; i++) {
         if (widget.students[i].username == username &&
             widget.students[i].password == password) {
           formKey.currentState.save();
+          sharedPreferences.setBool("logged_in", true);
           Navigator.of(context).push(
               MaterialPageRoute(builder: (BuildContext context) => Subjects()));
+          setState(() {
+            wrongUser = false;
+          });
           break;
         } else {
           setState(() {
