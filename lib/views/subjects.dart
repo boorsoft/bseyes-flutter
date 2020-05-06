@@ -16,19 +16,10 @@ class SubjectsState extends State<Subjects> {
   final SubjectsService subjectsService =
       SubjectsService(); // Создаем новый объект класса SubjectsService
 
-  @override
-  void initState() {
-    super.initState();
-    checkLoginStatus();
-  }
-
-  checkLoginStatus() async {
+  logOut() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    if (!sharedPreferences.getBool("logged_in")) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => Login()),
-          (Route<dynamic> route) => false);
-    }
+    sharedPreferences.clear();
+    sharedPreferences.commit();
   }
 
   @override
@@ -68,15 +59,17 @@ class SubjectsState extends State<Subjects> {
                               textAlign: TextAlign.center,
                             ))),
                         Positioned(
+                          left: 20,
+                          top: 30,
                           child: FlatButton(
-                              child: Text('Выйти'),
+                              child: Text('Выйти',
+                                  style: defaultTextStyleWhiteBold),
                               onPressed: () {
-                                sharedPreferences.clear();
-                                sharedPreferences.commit();
+                                logOut();
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            Login()),
+                                            LoginFutureBuilder()),
                                     (Route<dynamic> route) => false);
                               }),
                         )

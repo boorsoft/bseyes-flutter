@@ -55,6 +55,12 @@ class LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   bool wrongUser = false;
 
+  @override
+  void initState() {
+    super.initState();
+    print(widget.students);
+  }
+
   logIn(String username, String password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (formKey.currentState.validate()) {
