@@ -35,7 +35,7 @@ class _AppState extends State<App> {
 
   Widget home() {
     if (loggedIn) {
-      return SubjectsFutureBuilder(student: login.student);
+      return SubjectsFutureBuilder();
     } else {
       return LoginFutureBuilder();
     }

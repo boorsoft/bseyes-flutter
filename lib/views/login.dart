@@ -41,7 +41,6 @@ class LoginFutureBuilder extends StatelessWidget {
 
 class Login extends StatefulWidget {
   final List<Student> students;
-  Student student;
 
   Login({this.students});
 
@@ -69,12 +68,12 @@ class LoginState extends State<Login> {
             widget.students[i].password == password) {
           formKey.currentState.save();
           sharedPreferences.setBool("logged_in", true);
+          sharedPreferences.setString("student", widget.students[i].toString());
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) =>
                   SubjectsFutureBuilder(student: widget.students[i])));
           setState(() {
             wrongUser = false;
-            widget.student = widget.students[i];
           });
           break;
         } else {

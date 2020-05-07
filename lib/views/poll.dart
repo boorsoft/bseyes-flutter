@@ -137,7 +137,8 @@ class PollState extends State<Poll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(title: Text('Опрос', style: headerTextStyle)),
+        appBar: AppBar(
+            centerTitle: true, title: Text('Опрос', style: headerTextStyle)),
         body: SingleChildScrollView(
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
