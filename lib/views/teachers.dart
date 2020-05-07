@@ -81,75 +81,44 @@ class TeachersState extends State<Teachers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: <Widget>[
-        Stack(children: <Widget>[
-          Container(
-            height: 200.0,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/bg2.jpg"),
-                    fit: BoxFit.cover)),
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text(widget.subject.subName, style: headerTextStyle)),
+        body: Container(
+          color: primaryColor,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0)),
+                      child: Container(
+                          color: Colors.white,
+                          // Эта штука работает типа как for
+                          child: ListView.builder(
+                              itemCount: subTeachers.length,
+                              itemBuilder: (BuildContext context, int i) {
+                                // строим контекст и создаем переменную i для обозначения индексов элементов
+                                return ListTile(
+                                    title: Text(
+                                      subTeachers[i].firstName +
+                                          " " +
+                                          subTeachers[i].middleName,
+                                      style: defaultTextStyle,
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 7.0, horizontal: 30.0),
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PollsFutureBuilder(
+                                                  subject: widget.subject,
+                                                  teacher: subTeachers[i],
+                                                ))));
+                              }))))
+            ],
           ),
-          Container(
-            height: 200.0,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                  Colors.black.withOpacity(0.0),
-                  Colors.black.withOpacity(0.6)
-                ],
-                    stops: [
-                  0.0,
-                  0.7
-                ])),
-          ),
-          Container(
-              alignment: Alignment.center,
-              height: 200.0,
-              child: Center(
-                  child: Text(
-                widget.subject.subName,
-                style: bgTextStyle,
-                textAlign: TextAlign.center,
-              )))
-        ]),
-        Expanded(
-            child: Container(
-                transform: Matrix4.translationValues(
-                    0, -20.0, 0), // Поднимаем контейнер выше
-                child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25.0),
-                        topRight: Radius.circular(25.0)),
-                    child: Container(
-                        color: Colors.white,
-                        // Эта штука работает типа как for
-                        child: ListView.builder(
-                            itemCount: subTeachers.length,
-                            itemBuilder: (BuildContext context, int i) {
-                              // строим контекст и создаем переменную i для обозначения индексов элементов
-                              return ListTile(
-                                  title: Text(
-                                    subTeachers[i].firstName +
-                                        " " +
-                                        subTeachers[i].middleName,
-                                    style: defaultTextStyle,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 7.0, horizontal: 30.0),
-                                  onTap: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PollsFutureBuilder(
-                                                subject: widget.subject,
-                                                teacher: subTeachers[i],
-                                              ))));
-                            })))))
-      ],
-    ));
+        ));
   }
 }

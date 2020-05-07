@@ -42,5 +42,5 @@ const headingTextStyle = TextStyle(
 const headerTextStyle = TextStyle(
     color: Colors.white,
     fontFamily: 'San Francisco',
-    fontSize: 22.0,
+    fontSize: 18.0,
     fontWeight: FontWeight.bold);

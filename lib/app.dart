@@ -46,6 +46,6 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         home: home(),
         theme: ThemeData(
-            primaryColor: primaryColor, backgroundColor: Colors.white));
+            primaryColor: primaryColor, scaffoldBackgroundColor: Colors.white));
   }
 }

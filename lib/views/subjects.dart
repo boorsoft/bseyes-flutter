@@ -2,9 +2,9 @@ import 'package:bseyes_flutter/models/subject_model.dart';
 import 'package:bseyes_flutter/services/subjects_service.dart';
 import 'package:bseyes_flutter/style.dart';
 import 'package:bseyes_flutter/views/teachers.dart';
-import 'package:bseyes_flutter/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'login.dart';
 
 class Subjects extends StatefulWidget {
   @override
@@ -25,6 +25,29 @@ class SubjectsState extends State<Subjects> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Предметы', style: headerTextStyle),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                logOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            LoginFutureBuilder()),
+                    (Route<dynamic> route) => false);
+              },
+              child: Text('ВЫЙТИ',
+                  style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.2,
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'San Francisco')),
+            )
+          ],
+        ),
         body: FutureBuilder(
             // FutureBuilder - штука которая из Future функции строит контекст
             future: subjectsService
@@ -36,81 +59,92 @@ class SubjectsState extends State<Subjects> {
                 // Если в снапшоте есть данные
                 List<Subject> subjects = snapshot
                     .data; // Создаем список и присваиваем данные snapshot
-                return Column(
-                  children: <Widget>[
-                    // Картинка сверху с надписем
-                    // Элементы в Stack накладываются друг на друга, в отличие от Column
-                    Stack(
-                      children: <Widget>[
-                        Container(
-                          height: 230.0,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/bg.jpg"),
-                                  fit: BoxFit.cover)),
-                        ),
-                        Container(
-                            alignment: Alignment.center,
-                            height: 230.0,
-                            child: Center(
-                                child: Text(
-                              'Выберите предмет',
-                              style: bgTextStyle,
-                              textAlign: TextAlign.center,
-                            ))),
-                        Positioned(
-                          left: 20,
-                          top: 30,
-                          child: FlatButton(
-                              child: Icon(Icons.arrow_back),
-                              onPressed: () {
-                                logOut();
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            LoginFutureBuilder()),
-                                    (Route<dynamic> route) => false);
-                              }),
-                        )
-                      ],
-                    ),
-                    Expanded(
-                        child: Container(
-                            transform: Matrix4.translationValues(
-                                0, -22.0, 0), // Поднимаем контейнер выше
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(25.0),
-                                    topRight: Radius.circular(25.0)),
-                                child: Container(
-                                    color: Colors.white,
-                                    width: double.infinity,
-                                    // Эта штука работает типа как for
-                                    child: ListView.builder(
-                                        itemCount: subjects
-                                            .length, // количество элементов = размер списка subjects
-                                        itemBuilder:
-                                            (BuildContext context, int i) {
-                                          // строим контекст и создаем переменную i для обозначения индексов элементов
-                                          return ListTile(
-                                              title: Text(
-                                                subjects[i].subName,
-                                                style: defaultTextStyle,
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      vertical: 7.0,
-                                                      horizontal: 30.0),
-                                              onTap: () => Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          TeachersFutureBuilder(
-                                                            subject:
-                                                                subjects[i],
-                                                          ))));
-                                        })))))
-                  ],
+                return Container(
+                  color: primaryColor,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.0),
+                                  topRight: Radius.circular(25.0)),
+                              child: Container(
+                                  color: Colors.white,
+                                  width: double.infinity,
+                                  // Эта штука работает типа как for
+                                  child: ListView.builder(
+                                      itemCount: subjects
+                                          .length, // количество элементов = размер списка subjects
+                                      itemBuilder:
+                                          (BuildContext context, int i) {
+                                        // строим контекст и создаем переменную i для обозначения индексов элементов
+                                        return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0,
+                                                horizontal: 12.0),
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                8.0)),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          blurRadius: 4.2,
+                                                          color: Colors.black54
+                                                              .withOpacity(0.4),
+                                                          offset:
+                                                              Offset(1.5, 2.6))
+                                                    ]),
+                                                child: Material(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(8.0)),
+                                                  child: InkWell(
+                                                      borderRadius: BorderRadius.all(
+                                                          Radius.circular(8.0)),
+                                                      splashColor:
+                                                          Colors.white12,
+                                                      onTap: () => Navigator.of(
+                                                              context)
+                                                          .push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          TeachersFutureBuilder(
+                                                                            subject:
+                                                                                subjects[i],
+                                                                          ))),
+                                                      child: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height: 150.0,
+                                                          child: Text(
+                                                              subjects[i]
+                                                                  .subName,
+                                                              style:
+                                                                  defaultTextStyleBold))),
+                                                )));
+                                        // return ListTile(
+                                        //     title: Text(
+                                        //       subjects[i].subName,
+                                        //       style: defaultTextStyle,
+                                        //       textAlign: TextAlign.center,
+                                        //     ),
+                                        //     contentPadding:
+                                        //         EdgeInsets.symmetric(
+                                        //             vertical: 7.0,
+                                        //             horizontal: 10.0),
+                                        //     onTap: () => Navigator.of(context)
+                                        //         .push(MaterialPageRoute(
+                                        //             builder: (context) =>
+                                        //                 TeachersFutureBuilder(
+                                        //                   subject: subjects[i],
+                                        //                 ))));
+                                      }))))
+                    ],
+                  ),
                 );
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
