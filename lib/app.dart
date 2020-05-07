@@ -12,6 +12,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   SharedPreferences sharedPreferences;
   bool loggedIn = false;
+  Login login = new Login();
 
   @override
   void initState() {
@@ -34,7 +35,7 @@ class _AppState extends State<App> {
 
   Widget home() {
     if (loggedIn) {
-      return Subjects();
+      return SubjectsFutureBuilder(student: login.student);
     } else {
       return LoginFutureBuilder();
     }
