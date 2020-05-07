@@ -19,4 +19,11 @@ class Student {
         password: json['password'] as String,
         subject: json['subject'] as List);
   }
+
+  Map<String, dynamic> toJson() => {
+        'student_id': studentID,
+        'username': username,
+        'password': password,
+        'subject': subject
+      };
 }

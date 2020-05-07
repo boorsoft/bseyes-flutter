@@ -86,7 +86,6 @@ class SubjectsState extends State<Subjects> {
   logOut() async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
-    sharedPreferences.commit();
   }
 
   @override
@@ -181,22 +180,6 @@ class SubjectsState extends State<Subjects> {
                                                                 defaultTextStyleBold)
                                                       ]))),
                                         )));
-                                // return ListTile(
-                                //     title: Text(
-                                //       subjects[i].subName,
-                                //       style: defaultTextStyle,
-                                //       textAlign: TextAlign.center,
-                                //     ),
-                                //     contentPadding:
-                                //         EdgeInsets.symmetric(
-                                //             vertical: 7.0,
-                                //             horizontal: 10.0),
-                                //     onTap: () => Navigator.of(context)
-                                //         .push(MaterialPageRoute(
-                                //             builder: (context) =>
-                                //                 TeachersFutureBuilder(
-                                //                   subject: subjects[i],
-                                //                 ))));
                               }))))
             ],
           ),

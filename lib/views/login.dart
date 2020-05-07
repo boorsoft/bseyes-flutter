@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bseyes_flutter/services/students_service.dart';
@@ -68,7 +70,9 @@ class LoginState extends State<Login> {
             widget.students[i].password == password) {
           formKey.currentState.save();
           sharedPreferences.setBool("logged_in", true);
-          sharedPreferences.setString("student", widget.students[i].toString());
+          sharedPreferences.setString(
+              "student", jsonEncode(widget.students[i].toJson()));
+
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) =>
                   SubjectsFutureBuilder(student: widget.students[i])));
