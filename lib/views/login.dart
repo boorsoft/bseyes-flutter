@@ -62,6 +62,7 @@ class LoginState extends State<Login> {
     super.initState();
   }
 
+  // Функция для авторизации после нажатия кнопки "Войти"
   logIn(String username, String password) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (formKey.currentState.validate()) {
@@ -69,10 +70,12 @@ class LoginState extends State<Login> {
         if (widget.students[i].username == username &&
             widget.students[i].password == password) {
           formKey.currentState.save();
-          sharedPreferences.setBool("logged_in", true);
+          sharedPreferences.setBool("logged_in", true); // Сохраняем авторизацию
+          // Запоминаем студента
           sharedPreferences.setString(
               "student", jsonEncode(widget.students[i].toJson()));
 
+          // Переходим на страницу с предметами
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) =>
                   SubjectsFutureBuilder(student: widget.students[i])));
@@ -89,6 +92,7 @@ class LoginState extends State<Login> {
     }
   }
 
+  // Widget для вывода информации об ошибке
   Widget errorMessage() {
     if (wrongUser) {
       return Center(

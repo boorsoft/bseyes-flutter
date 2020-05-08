@@ -99,23 +99,59 @@ class TeachersState extends State<Teachers> {
                           child: ListView.builder(
                               itemCount: subTeachers.length,
                               itemBuilder: (BuildContext context, int i) {
-                                // строим контекст и создаем переменную i для обозначения индексов элементов
-                                return ListTile(
-                                    title: Text(
-                                      subTeachers[i].firstName +
-                                          " " +
-                                          subTeachers[i].middleName,
-                                      style: defaultTextStyle,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 7.0, horizontal: 30.0),
-                                    onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PollsFutureBuilder(
-                                                  subject: widget.subject,
-                                                  teacher: subTeachers[i],
-                                                ))));
+                                return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 12.0),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8.0)),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  blurRadius: 4.2,
+                                                  color: Colors.black54
+                                                      .withOpacity(0.4),
+                                                  offset: Offset(1.5, 2.6))
+                                            ]),
+                                        child: Material(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                          child: InkWell(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8.0)),
+                                              splashColor: Colors.white12,
+                                              onTap: () => Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PollsFutureBuilder(
+                                                            subject:
+                                                                widget.subject,
+                                                            teacher:
+                                                                subTeachers[i],
+                                                          ))),
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  height: 150.0,
+                                                  child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(Icons.person,
+                                                            color: Color(
+                                                                0xFFB2B2B2)),
+                                                        SizedBox(width: 10.0),
+                                                        Text(
+                                                            subTeachers[i]
+                                                                    .firstName +
+                                                                " " +
+                                                                subTeachers[i]
+                                                                    .middleName,
+                                                            style:
+                                                                defaultTextStyleBold)
+                                                      ]))),
+                                        )));
                               }))))
             ],
           ),

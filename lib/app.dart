@@ -20,17 +20,20 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    checkLoginStatus();
+    checkLoginStatus(); // Проверяем авторизован или нет
   }
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
+    // Если нет записи в sharedPrefs, значит не авторизован
     if (sharedPreferences.getBool("logged_in") == null) {
       setState(() {
         loggedIn = false;
       });
     } else {
+      // Сохраненные данные о студенте в sharedPrefs в JSON
       var studentLoad = jsonDecode(sharedPreferences.getString("student"));
+      // Переводим в объект класса Student
       student = Student(
           studentID: studentLoad['student_id'],
           username: studentLoad['username'],
@@ -42,6 +45,7 @@ class _AppState extends State<App> {
     }
   }
 
+  // Выводить страницу с предметами или страницу авторизации
   Widget home() {
     if (loggedIn) {
       return SubjectsFutureBuilder(student: student);
