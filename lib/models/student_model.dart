@@ -24,6 +24,6 @@ class Student {
         'student_id': studentID,
         'username': username,
         'password': password,
-        'subject': subject
+        'subject': subject.toList()
       };
 }

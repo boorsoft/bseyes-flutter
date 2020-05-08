@@ -15,7 +15,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   SharedPreferences sharedPreferences;
   bool loggedIn = false;
-  var student;
+  Student student;
 
   @override
   void initState() {
@@ -25,12 +25,17 @@ class _AppState extends State<App> {
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    student = jsonDecode(sharedPreferences.getString("student"));
     if (sharedPreferences.getBool("logged_in") == null) {
       setState(() {
         loggedIn = false;
       });
     } else {
+      var studentLoad = jsonDecode(sharedPreferences.getString("student"));
+      student = Student(
+          studentID: studentLoad['student_id'],
+          username: studentLoad['username'],
+          password: studentLoad['password'],
+          subject: studentLoad['subject']);
       setState(() {
         loggedIn = true;
       });
