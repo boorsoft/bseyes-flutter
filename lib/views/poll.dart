@@ -147,39 +147,46 @@ class PollState extends State<Poll> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true, title: Text('Опрос', style: headerTextStyle)),
-        body: SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 50.0),
-                    Container(
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(minHeight: 150.0),
-                      child: Text(widget.questions[qNum].question,
-                          style: defaultTextStyle),
-                    ),
-                    SizedBox(height: 70.0),
-                    Container(
-                        padding: EdgeInsets.all(5.0),
-                        child: Text(
-                          "1 - Полностью согласен, 5 - Абсолютно не согласен",
-                          style: defaultTextStyle,
-                          textAlign: TextAlign.center,
-                        )),
-                    SizedBox(height: 10.0),
-                    Wrap(
+        body: Container(
+            color: primaryColor,
+            child: SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0))),
+                    child: Column(
                       children: <Widget>[
-                        optionButton("1"),
-                        optionButton("2"),
-                        optionButton("3"),
-                        optionButton("4"),
-                        optionButton("5")
+                        SizedBox(height: 50.0),
+                        Container(
+                          alignment: Alignment.center,
+                          constraints: BoxConstraints(minHeight: 150.0),
+                          child: Text(widget.questions[qNum].question,
+                              style: defaultTextStyle),
+                        ),
+                        SizedBox(height: 70.0),
+                        Container(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text(
+                              "1 - Полностью согласен, 5 - Абсолютно не согласен",
+                              style: defaultTextStyle,
+                              textAlign: TextAlign.center,
+                            )),
+                        SizedBox(height: 10.0),
+                        Wrap(
+                          children: <Widget>[
+                            optionButton("1"),
+                            optionButton("2"),
+                            optionButton("3"),
+                            optionButton("4"),
+                            optionButton("5")
+                          ],
+                        ),
+                        SizedBox(height: 50.0),
+                        nextButton()
                       ],
-                    ),
-                    SizedBox(height: 50.0),
-                    nextButton()
-                  ],
-                ))));
+                    )))));
   }
 }

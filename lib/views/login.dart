@@ -212,6 +212,7 @@ class LoginState extends State<Login> {
                                   passwordController.text),
                               padding: EdgeInsets.all(10.0),
                               color: Colors.black87,
+                              splashColor: splashColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0)),
                               child: Text('ВОЙТИ',
