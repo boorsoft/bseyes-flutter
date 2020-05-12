@@ -5,15 +5,23 @@ import '../models/teacher_model.dart';
 import '../models/question_model.dart';
 import '../services/questions_service.dart';
 import '../style.dart';
+import 'poll-finish.dart';
 
-class PollsFutureBuilder extends StatelessWidget {
-  final QuestionsService questionsService = QuestionsService();
-
-  List<Question> questions;
+// Загружаем данные перед выполнением основного класса
+class PollsFutureBuilder extends StatefulWidget {
   final Teacher teacher;
   final Subject subject;
 
   PollsFutureBuilder({this.teacher, this.subject});
+
+  @override
+  _PollsFutureBuilderState createState() => _PollsFutureBuilderState();
+}
+
+class _PollsFutureBuilderState extends State<PollsFutureBuilder> {
+  final QuestionsService questionsService = QuestionsService();
+
+  List<Question> questions;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,9 @@ class PollsFutureBuilder extends StatelessWidget {
               if (snapshot.hasData) {
                 questions = snapshot.data;
                 return Poll(
-                    subject: subject, teacher: teacher, questions: questions);
+                    subject: widget.subject,
+                    teacher: widget.teacher,
+                    questions: questions);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(
@@ -78,32 +88,29 @@ class PollState extends State<Poll> {
 
   void nextQuestion() {
     setState(() {
-      if (choiceMade) {
-        if (qNum < widget.questions.length) {
-          qNum++;
-        } else {}
+      if (qNum < widget.questions.length - 1) {
+        qNum++;
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => PollFinish()));
       }
-      buttons["1"] = false;
-      buttons["2"] = false;
-      buttons["3"] = false;
-      buttons["4"] = false;
-      buttons["5"] = false;
+      // При каждом следующем вопросе кнопки сбрасываются
+      for (int i = 1; i <= 5; i++) buttons[i.toString()] = false;
       choiceMade = false;
     });
   }
 
+  // Метод для определения выбранной кнопки
   void chooseOption(String option) {
     setState(() {
-      buttons["1"] = false;
-      buttons["2"] = false;
-      buttons["3"] = false;
-      buttons["4"] = false;
-      buttons["5"] = false;
+      // Сбрасываем кнопки
+      for (int i = 1; i <= 5; i++) buttons[i.toString()] = false;
       buttons[option] = true;
       choiceMade = true;
     });
   }
 
+  // Метод, который возвращает кнопку
   Widget optionButton(String option) {
     return Padding(
         padding: EdgeInsets.all(5.0),
@@ -118,6 +125,7 @@ class PollState extends State<Poll> {
             )));
   }
 
+  // Метод, который возвращает кнопку 'Дальше'
   Widget nextButton() {
     if (choiceMade) {
       return ClipRRect(

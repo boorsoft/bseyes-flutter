@@ -8,14 +8,18 @@ import 'package:bseyes_flutter/views/teachers.dart';
 import 'login.dart';
 import '../models/student_model.dart';
 
-class SubjectsFutureBuilder extends StatelessWidget {
-  final SubjectsService subjectsService =
-      SubjectsService(); // Создаем новый объект класса SubjectsService
-
+class SubjectsFutureBuilder extends StatefulWidget {
   final Student student;
-  List<Subject> subjects;
 
   SubjectsFutureBuilder({this.student});
+
+  @override
+  _SubjectsFutureBuilderState createState() => _SubjectsFutureBuilderState();
+}
+
+class _SubjectsFutureBuilderState extends State<SubjectsFutureBuilder> {
+  final SubjectsService subjectsService = SubjectsService();
+  List<Subject> subjects;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class SubjectsFutureBuilder extends StatelessWidget {
                 // Если в снапшоте есть данные
                 subjects = snapshot
                     .data; // Создаем список и присваиваем данные snapshot
-                return Subjects(subjects: subjects, student: student);
+                return Subjects(subjects: subjects, student: widget.student);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(

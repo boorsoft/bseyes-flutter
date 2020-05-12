@@ -5,15 +5,20 @@ import 'package:bseyes_flutter/models/teacher_model.dart';
 import 'package:bseyes_flutter/services/teachers_service.dart';
 import 'poll.dart';
 
-class TeachersFutureBuilder extends StatelessWidget {
+class TeachersFutureBuilder extends StatefulWidget {
   // Объект класса сервиса преподавателей
+  final Subject subject;
+
+  TeachersFutureBuilder({this.subject});
+
+  @override
+  _TeachersFutureBuilderState createState() => _TeachersFutureBuilderState();
+}
+
+class _TeachersFutureBuilderState extends State<TeachersFutureBuilder> {
   final TeachersService teachersService = TeachersService();
 
-  final Subject subject;
   List<Teacher> teachers;
-
-  // Конструктор для получения предмета с subjects.dart
-  TeachersFutureBuilder({this.subject});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class TeachersFutureBuilder extends StatelessWidget {
               if (snapshot.hasData) {
                 teachers = snapshot.data;
                 // Возвращаем класс Teachers, где весь UI и передаем данные
-                return Teachers(subject: subject, teachers: teachers);
+                return Teachers(subject: widget.subject, teachers: teachers);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(

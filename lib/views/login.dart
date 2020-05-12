@@ -7,7 +7,12 @@ import 'package:bseyes_flutter/style.dart';
 import 'subjects.dart';
 import '../models/student_model.dart';
 
-class LoginFutureBuilder extends StatelessWidget {
+class LoginFutureBuilder extends StatefulWidget {
+  @override
+  _LoginFutureBuilderState createState() => _LoginFutureBuilderState();
+}
+
+class _LoginFutureBuilderState extends State<LoginFutureBuilder> {
   final StudentsService studentsService = StudentsService();
 
   List<Student> students;
