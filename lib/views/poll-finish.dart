@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 import 'package:bseyes_flutter/style.dart';
+import '../models/subject_model.dart';
+import '../models/teacher_model.dart';
+import '../models/comment_model.dart';
+import '../services/comments_service.dart';
 
 class PollFinish extends StatefulWidget {
+  final Subject subject;
+  final Teacher teacher;
+
+  PollFinish({this.subject, this.teacher});
+
   @override
   PollFinishState createState() => PollFinishState();
 }
 
 class PollFinishState extends State<PollFinish> {
   TextEditingController commentController = TextEditingController();
+  CommentsService commentsService = CommentsService();
+  Comment comment = Comment();
+  var commentJson;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +59,10 @@ class PollFinishState extends State<PollFinish> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 0, vertical: 15.0),
                               child: RaisedButton(
-                                onPressed: () => {},
+                                onPressed: () => {
+                                  commentJson = jsonEncode(comment.toJson()),
+                                  commentsService.addComment(commentJson)
+                                },
                                 splashColor: splashColor,
                                 padding: EdgeInsets.all(10.0),
                                 color: Colors.black87,
