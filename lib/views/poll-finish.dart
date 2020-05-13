@@ -28,6 +28,18 @@ class PollFinishState extends State<PollFinish> {
     super.initState();
   }
 
+  void sendComment() {
+    if (commentController.text != '') {
+      comment = Comment(
+          comment: commentController.text,
+          teacher: widget.teacher.teacherID,
+          subject: widget.subject.subjectID);
+      commentJson = jsonEncode(comment.toJson());
+      commentsService.addComment(commentJson);
+    }
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,14 +71,7 @@ class PollFinishState extends State<PollFinish> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 0, vertical: 15.0),
                               child: RaisedButton(
-                                onPressed: () => {
-                                  comment = Comment(
-                                      comment: commentController.text,
-                                      teacher: widget.teacher.teacherID,
-                                      subject: widget.subject.subjectID),
-                                  commentJson = jsonEncode(comment.toJson()),
-                                  commentsService.addComment(commentJson)
-                                },
+                                onPressed: () => sendComment(),
                                 splashColor: splashColor,
                                 padding: EdgeInsets.all(10.0),
                                 color: Colors.black87,

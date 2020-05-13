@@ -18,7 +18,4 @@ class Subject {
         subName: json['sub_name']
             as String); // as String - потому что sub_name - это строка
   }
-
-  Map<String, dynamic> toJson() =>
-      {'subject_id': subjectID, 'sub_name': subName};
 }
