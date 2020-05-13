@@ -11,11 +11,11 @@ class CommentsService {
       "Authorization": "Token 2dd6595ae58c373ee94a855469e63c391bb64adf"
     });
 
-    if (res.statusCode == 200) {
+    if (res.statusCode == 201) {
       print("Posted!");
       print(comment);
     } else {
-      throw 'Ошибка при отправлении!';
+      throw res.statusCode;
     }
   }
 }

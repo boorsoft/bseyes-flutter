@@ -10,7 +10,7 @@ class Subject {
       @required
           this.subName}); // Создаем конструктор класса Subject, required - обязательный аргумент
 
-  // Переводим JSON в Dart класс, описываем функцию которая делает это
+  // Переводим JSON в Dart объект, описываем функцию которая делает это
   factory Subject.fromJson(Map<String, dynamic> json) {
     return Subject(
         subjectID: json['subject_id']
@@ -18,4 +18,7 @@ class Subject {
         subName: json['sub_name']
             as String); // as String - потому что sub_name - это строка
   }
+
+  Map<String, dynamic> toJson() =>
+      {'subject_id': subjectID, 'sub_name': subName};
 }

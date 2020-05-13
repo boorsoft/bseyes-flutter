@@ -60,6 +60,10 @@ class PollFinishState extends State<PollFinish> {
                                   horizontal: 0, vertical: 15.0),
                               child: RaisedButton(
                                 onPressed: () => {
+                                  comment = Comment(
+                                      comment: commentController.text,
+                                      teacher: widget.teacher.teacherID,
+                                      subject: widget.subject.subjectID),
                                   commentJson = jsonEncode(comment.toJson()),
                                   commentsService.addComment(commentJson)
                                 },

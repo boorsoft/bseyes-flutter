@@ -22,4 +22,12 @@ class Teacher {
         middleName: json['middle_name'] as String,
         subject: json['subject'] as List);
   }
+
+  Map<String, dynamic> toJson() => {
+        'teacher_id': teacherID,
+        'last_name': lastName,
+        'first_name': firstName,
+        'middle_name': middleName,
+        'subject': subject.toList()
+      };
 }
