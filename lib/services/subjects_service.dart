@@ -1,17 +1,25 @@
 import 'dart:convert';
 
 import 'package:bseyes_flutter/models/subject_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 
 class SubjectsService {
   final String subjectsUrl =
       "https://bseyes-restapi--akmatoff.repl.co/api/subjects"; // Ссылка на API, на страницу subjects
 
+  final String token = DotEnv().env['TOKEN'];
+
   Future<List<Subject>> getSubjects() async {
     // Описываем функцию, async должен быть потому что типа не может сразу выполняться, надо подождать
     Response res = await get(
         // await здесь обязателен, типа нужно дождаться ответа
-        subjectsUrl); // В переменную res с типом данных Response (т.е ответ) вводим функцию get, он по URL выполняет запрос
+        subjectsUrl,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Token $token"
+        }); // В переменную res с типом данных Response (т.е ответ) вводим функцию get, он по URL выполняет запрос
 
     // Если успешно получили ответ
     if (res.statusCode == 200) {

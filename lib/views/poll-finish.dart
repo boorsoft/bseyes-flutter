@@ -37,6 +37,7 @@ class PollFinishState extends State<PollFinish> {
       commentJson = jsonEncode(comment.toJson());
       commentsService.addComment(commentJson);
     }
+
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
