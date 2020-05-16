@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bseyes_flutter/models/student_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 
 import '../models/student_model.dart';
@@ -9,11 +10,13 @@ class StudentsService {
   final String studentsUrl =
       "http://bseyes-restapi.akmatoff.repl.co/api/students";
 
+  final String token = DotEnv().env['TOKEN'];
+
   Future<List<Student>> getStudents() async {
     Response res = await get(studentsUrl, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": "Token 2dd6595ae58c373ee94a855469e63c391bb64adf"
+      "Authorization": "Token $token"
     });
 
     if (res.statusCode == 200) {
