@@ -10,8 +10,9 @@ import '../services/comments_service.dart';
 class PollFinish extends StatefulWidget {
   final Subject subject;
   final Teacher teacher;
+  final List<int> rates;
 
-  PollFinish({this.subject, this.teacher});
+  PollFinish({this.subject, this.teacher, this.rates});
 
   @override
   PollFinishState createState() => PollFinishState();

@@ -72,6 +72,7 @@ class PollState extends State<Poll> {
   int qNum = 0;
   Color displayColor = primaryColor;
   bool choiceMade = false;
+  List<int> rates = [];
 
   Map<String, bool> buttons = {
     "1": false,
@@ -92,8 +93,10 @@ class PollState extends State<Poll> {
         qNum++;
       } else {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                PollFinish(subject: widget.subject, teacher: widget.teacher)));
+            builder: (context) => PollFinish(
+                subject: widget.subject,
+                teacher: widget.teacher,
+                rates: rates)));
       }
       // При каждом следующем вопросе кнопки сбрасываются
       for (int i = 1; i <= 5; i++) buttons[i.toString()] = false;
@@ -106,8 +109,22 @@ class PollState extends State<Poll> {
     setState(() {
       // Сбрасываем кнопки
       for (int i = 1; i <= 5; i++) buttons[i.toString()] = false;
+
       buttons[option] = true;
       choiceMade = true;
+
+      if (buttons["1"]) {
+        rates.add(1);
+      } else if (buttons["2"]) {
+        rates.add(2);
+      } else if (buttons["3"]) {
+        rates.add(3);
+      } else if (buttons["4"]) {
+        rates.add(4);
+      } else if (buttons["5"]) {
+        rates.add(5);
+      }
+      print(rates);
     });
   }
 
