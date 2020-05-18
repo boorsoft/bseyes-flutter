@@ -99,6 +99,7 @@ class TeachersState extends State<Teachers> {
                           topLeft: Radius.circular(25.0),
                           topRight: Radius.circular(25.0)),
                       child: Container(
+                          padding: EdgeInsets.only(top: 10.0),
                           color: Colors.white,
                           // Эта штука работает типа как for
                           child: ListView.builder(
@@ -106,7 +107,7 @@ class TeachersState extends State<Teachers> {
                               itemBuilder: (BuildContext context, int i) {
                                 return Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 12.0),
+                                        vertical: 8.0, horizontal: 16.0),
                                     child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
@@ -119,13 +120,13 @@ class TeachersState extends State<Teachers> {
                                                   offset: Offset(1.5, 2.6))
                                             ]),
                                         child: Material(
-                                          color: Colors.white,
+                                          color: primaryColor,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(8.0)),
                                           child: InkWell(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8.0)),
-                                              splashColor: Colors.white12,
+                                              splashColor: splashColor,
                                               onTap: () => Navigator.of(context)
                                                   .push(MaterialPageRoute(
                                                       builder: (context) =>
@@ -154,7 +155,7 @@ class TeachersState extends State<Teachers> {
                                                                 subTeachers[i]
                                                                     .middleName,
                                                             style:
-                                                                defaultTextStyleBold)
+                                                                defaultTextStyleWhiteBold)
                                                       ]))),
                                         )));
                               }))))

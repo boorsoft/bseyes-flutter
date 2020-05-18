@@ -92,8 +92,6 @@ class PollState extends State<Poll> {
     setState(() {
       if (qNum < widget.questions.length - 1) {
         qNum++;
-        rates.add(rate);
-        print(rates);
       } else {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => PollFinish(
@@ -101,6 +99,8 @@ class PollState extends State<Poll> {
                 teacher: widget.teacher,
                 rates: rates)));
       }
+      rates.add(rate);
+      print(rates);
       // При каждом следующем вопросе кнопки сбрасываются
       for (int i = 1; i <= 5; i++) buttons[i.toString()] = false;
       choiceMade = false;

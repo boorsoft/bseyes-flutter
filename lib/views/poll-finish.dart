@@ -27,6 +27,7 @@ class PollFinishState extends State<PollFinish> {
   @override
   void initState() {
     super.initState();
+    print(widget.rates);
   }
 
   void sendComment() {
