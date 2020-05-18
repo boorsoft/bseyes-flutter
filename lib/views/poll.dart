@@ -72,6 +72,7 @@ class PollState extends State<Poll> {
   int qNum = 0;
   Color displayColor = primaryColor;
   bool choiceMade = false;
+  int rate;
   List<int> rates = [];
 
   Map<String, bool> buttons = {
@@ -91,6 +92,8 @@ class PollState extends State<Poll> {
     setState(() {
       if (qNum < widget.questions.length - 1) {
         qNum++;
+        rates.add(rate);
+        print(rates);
       } else {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => PollFinish(
@@ -114,17 +117,17 @@ class PollState extends State<Poll> {
       choiceMade = true;
 
       if (buttons["1"]) {
-        rates.add(1);
+        rate = 1;
       } else if (buttons["2"]) {
-        rates.add(2);
+        rate = 2;
       } else if (buttons["3"]) {
-        rates.add(3);
+        rate = 3;
       } else if (buttons["4"]) {
-        rates.add(4);
+        rate = 4;
       } else if (buttons["5"]) {
-        rates.add(5);
+        rate = 5;
       }
-      print(rates);
+      print(rate);
     });
   }
 
