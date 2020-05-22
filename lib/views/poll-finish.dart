@@ -56,6 +56,7 @@ class PollFinishState extends State<PollFinish> {
         question: widget.questions,
         rate: widget.rates);
 
+    sendComment();
     answerJson = jsonEncode(answer.toJson());
     answersService.addAnswer(answerJson);
   }
@@ -90,7 +91,7 @@ class PollFinishState extends State<PollFinish> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 0, vertical: 15.0),
                       child: RaisedButton(
-                        onPressed: () => sendComment(),
+                        onPressed: () => sendAnswer(),
                         splashColor: splashColor,
                         padding: EdgeInsets.all(10.0),
                         color: Colors.black87,

@@ -14,7 +14,7 @@ class AnswersService {
       "Authorization": "Token $token"
     });
 
-    if (res.statusCode == 200) {
+    if (res.statusCode == 201) {
       print("Posted!");
       print(answer);
     } else {
