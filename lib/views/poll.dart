@@ -74,6 +74,7 @@ class PollState extends State<Poll> {
   bool choiceMade = false;
   int rate;
   List<int> rates = [];
+  List questionsID = [];
 
   Map<String, bool> buttons = {
     "1": false,
@@ -86,6 +87,9 @@ class PollState extends State<Poll> {
   @override
   void initState() {
     super.initState();
+    for (int i = 0; i < widget.questions.length; i++) {
+      questionsID.add(widget.questions[i].questionID);
+    }
   }
 
   void nextQuestion() {
@@ -97,6 +101,7 @@ class PollState extends State<Poll> {
             builder: (context) => PollFinish(
                 subject: widget.subject,
                 teacher: widget.teacher,
+                questions: questionsID,
                 rates: rates)));
       }
       rates.add(rate);

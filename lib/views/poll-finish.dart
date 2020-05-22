@@ -5,14 +5,17 @@ import 'package:bseyes_flutter/style.dart';
 import '../models/subject_model.dart';
 import '../models/teacher_model.dart';
 import '../models/comment_model.dart';
+import '../models/answer_model.dart';
 import '../services/comments_service.dart';
+import '../services/answers_service.dart';
 
 class PollFinish extends StatefulWidget {
   final Subject subject;
   final Teacher teacher;
   final List<int> rates;
+  final List questions;
 
-  PollFinish({this.subject, this.teacher, this.rates});
+  PollFinish({this.subject, this.teacher, this.rates, this.questions});
 
   @override
   PollFinishState createState() => PollFinishState();
@@ -21,8 +24,11 @@ class PollFinish extends StatefulWidget {
 class PollFinishState extends State<PollFinish> {
   TextEditingController commentController = TextEditingController();
   CommentsService commentsService = CommentsService();
+  AnswersService answersService = AnswersService();
   Comment comment = Comment();
+  Answer answer = Answer();
   var commentJson;
+  var answerJson;
 
   @override
   void initState() {
@@ -41,6 +47,17 @@ class PollFinishState extends State<PollFinish> {
     }
 
     Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  void sendAnswer() {
+    answer = Answer(
+        teacher: widget.teacher.teacherID,
+        subject: widget.subject.subjectID,
+        question: widget.questions,
+        rate: widget.rates);
+
+    answerJson = jsonEncode(answer.toJson());
+    answersService.addAnswer(answerJson);
   }
 
   @override
