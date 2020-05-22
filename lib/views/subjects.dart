@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:bseyes_flutter/models/subject_model.dart';
 import 'package:bseyes_flutter/services/subjects_service.dart';
@@ -100,22 +101,19 @@ class SubjectsState extends State<Subjects> {
           title: Text('Предметы', style: headerTextStyle),
           actions: <Widget>[
             FlatButton(
-              onPressed: () {
-                logOut();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            LoginFutureBuilder()),
-                    (Route<dynamic> route) => false);
-              },
-              child: Text('ВЫЙТИ',
-                  style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: 1.2,
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'San Francisco')),
-            )
+                onPressed: () {
+                  logOut();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              LoginFutureBuilder()),
+                      (Route<dynamic> route) => false);
+                },
+                child: FaIcon(
+                  FontAwesomeIcons.signOutAlt,
+                  color: Colors.white,
+                  size: 22.0,
+                ))
           ],
         ),
         body: Container(
@@ -174,7 +172,10 @@ class SubjectsState extends State<Subjects> {
                                                           MainAxisAlignment
                                                               .center,
                                                       children: [
-                                                        Icon(Icons.subject,
+                                                        FaIcon(
+                                                            FontAwesomeIcons
+                                                                .bars,
+                                                            size: 20.0,
                                                             color: Color(
                                                                 0xFFB2B2B2)),
                                                         SizedBox(width: 10.0),
