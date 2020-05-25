@@ -196,7 +196,7 @@ class PollState extends State<Poll> {
                         Container(
                             padding: EdgeInsets.all(5.0),
                             child: Text(
-                              "1 - Полностью согласен, 5 - Абсолютно не согласен",
+                              "1 - Абсолютно не согласен, 5 - Полностью согласен",
                               style: defaultTextStyle,
                               textAlign: TextAlign.center,
                             )),
