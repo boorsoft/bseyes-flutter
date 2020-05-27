@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:bseyes_flutter/style.dart';
 import '../models/subject_model.dart';
@@ -29,11 +30,14 @@ class PollFinishState extends State<PollFinish> {
   Answer answer = Answer();
   var commentJson;
   var answerJson;
+  var ratesJoined;
 
   @override
   void initState() {
     super.initState();
+    ratesJoined = widget.rates.join(",");
     print(widget.rates);
+    print(ratesJoined);
   }
 
   void sendComment() {
@@ -54,7 +58,7 @@ class PollFinishState extends State<PollFinish> {
         teacher: widget.teacher.teacherID,
         subject: widget.subject.subjectID,
         question: widget.questions,
-        rate: widget.rates);
+        rate: ratesJoined);
 
     sendComment();
     answerJson = jsonEncode(answer.toJson());

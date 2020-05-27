@@ -3,7 +3,7 @@ class Answer {
   final int teacher;
   final int subject;
   final List question;
-  final List rate;
+  final String rate;
 
   Answer({this.answerID, this.teacher, this.subject, this.question, this.rate});
 
