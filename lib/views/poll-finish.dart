@@ -5,9 +5,7 @@ import 'dart:core';
 import 'package:bseyes_flutter/style.dart';
 import '../models/subject_model.dart';
 import '../models/teacher_model.dart';
-import '../models/comment_model.dart';
 import '../models/answer_model.dart';
-import '../services/comments_service.dart';
 import '../services/answers_service.dart';
 
 class PollFinish extends StatefulWidget {
@@ -24,11 +22,8 @@ class PollFinish extends StatefulWidget {
 
 class PollFinishState extends State<PollFinish> {
   TextEditingController commentController = TextEditingController();
-  CommentsService commentsService = CommentsService();
   AnswersService answersService = AnswersService();
-  Comment comment = Comment();
   Answer answer = Answer();
-  var commentJson;
   var answerJson;
   var ratesJoined;
 
@@ -40,29 +35,17 @@ class PollFinishState extends State<PollFinish> {
     print(ratesJoined);
   }
 
-  void sendComment() {
-    if (commentController.text != '') {
-      comment = Comment(
-          comment: commentController.text,
-          teacher: widget.teacher.teacherID,
-          subject: widget.subject.subjectID);
-      commentJson = jsonEncode(comment.toJson());
-      commentsService.addComment(commentJson);
-    }
-
-    Navigator.of(context).popUntil((route) => route.isFirst);
-  }
-
   void sendAnswer() {
     answer = Answer(
         teacher: widget.teacher.teacherID,
         subject: widget.subject.subjectID,
         question: widget.questions,
-        rate: ratesJoined);
-
-    sendComment();
+        rate: ratesJoined,
+        comment: commentController.text);
     answerJson = jsonEncode(answer.toJson());
     answersService.addAnswer(answerJson);
+
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override
