@@ -1,4 +1,4 @@
-package com.example.bseyes_flutter
+package com.boorsoft.bseyes
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

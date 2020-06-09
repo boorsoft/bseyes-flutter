@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bseyes_flutter/services/students_service.dart';
-import 'package:bseyes_flutter/style.dart';
+import 'package:bseyes/services/students_service.dart';
+import 'package:bseyes/style.dart';
 import 'subjects.dart';
 import '../models/student_model.dart';
 

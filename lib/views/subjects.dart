@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:bseyes_flutter/models/subject_model.dart';
-import 'package:bseyes_flutter/services/subjects_service.dart';
-import 'package:bseyes_flutter/style.dart';
-import 'package:bseyes_flutter/views/teachers.dart';
+import 'package:bseyes/models/subject_model.dart';
+import 'package:bseyes/services/subjects_service.dart';
+import 'package:bseyes/style.dart';
+import 'package:bseyes/views/teachers.dart';
 import 'login.dart';
 import '../models/student_model.dart';
 

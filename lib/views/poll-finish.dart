@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:bseyes_flutter/style.dart';
+import 'package:bseyes/style.dart';
 import '../models/subject_model.dart';
 import '../models/teacher_model.dart';
 import '../models/answer_model.dart';

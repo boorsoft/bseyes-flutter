@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bseyes_flutter/models/subject_model.dart';
+import 'package:bseyes/models/subject_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 
