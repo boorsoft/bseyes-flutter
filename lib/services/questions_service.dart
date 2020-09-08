@@ -1,15 +1,16 @@
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/question_model.dart';
 
 class QuestionsService {
   final String questionsUrl =
       "http://bseyes-restapi--akmatoff.repl.co/api/questions/";
 
-  final String token = DotEnv().env['TOKEN'];
-
   Future<List<Question>> getQuestions() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("TOKEN");
+
     Response res = await get(questionsUrl, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",

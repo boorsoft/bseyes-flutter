@@ -1,13 +1,14 @@
 import 'package:http/http.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AnswersService {
   final String answersURL =
       "http://bseyes-restapi--akmatoff.repl.co/api/answers/";
 
-  final String token = DotEnv().env['TOKEN'];
-
   Future<void> addAnswer(var answer) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("TOKEN");
+
     Response res = await post(answersURL, body: answer, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",

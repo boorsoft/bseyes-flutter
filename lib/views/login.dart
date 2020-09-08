@@ -1,50 +1,11 @@
 import 'dart:convert';
-
+import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bseyes/services/students_service.dart';
+import 'package:bseyes/widgets/widgets.dart';
 import 'package:bseyes/style.dart';
 import 'subjects.dart';
 import '../models/student_model.dart';
-
-class LoginFutureBuilder extends StatefulWidget {
-  @override
-  _LoginFutureBuilderState createState() => _LoginFutureBuilderState();
-}
-
-class _LoginFutureBuilderState extends State<LoginFutureBuilder> {
-  final StudentsService studentsService = StudentsService();
-
-  List<Student> students;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: FutureBuilder(
-            future: studentsService.getStudents(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
-              if (snapshot.hasData) {
-                students = snapshot.data;
-                return Login(students: students);
-              } else if (snapshot.hasError) {
-                // Если возникла ошибка
-                return Center(
-                  child: Text('Не удалось загрузить данные...'),
-                );
-              } else {
-                // Если данные еще не загрузились
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Center(child: CircularProgressIndicator()),
-                  ],
-                );
-              }
-            }));
-  }
-}
 
 class Login extends StatefulWidget {
   final List<Student> students;
@@ -58,58 +19,32 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  String apiUrl = "bseyes-restapi.akmatoff.repl.co/login";
 
   final formKey = GlobalKey<FormState>();
   bool wrongUser = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // Send username and password to the server
+  Future<Map<String, dynamic>> login(String username, String password) async {
+    Response res = await post(apiUrl, body: {
+      'username': username,
+      'password': password
+    }, headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
 
-  // Функция для авторизации после нажатия кнопки "Войти"
-  logIn(String username, String password) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if (formKey.currentState.validate()) {
-      for (int i = 0; i < widget.students.length; i++) {
-        if (widget.students[i].username == username &&
-            widget.students[i].password == password) {
-          formKey.currentState.save();
-          sharedPreferences.setBool("logged_in", true); // Сохраняем авторизацию
-          // Запоминаем студента
-          sharedPreferences.setString(
-              "student", jsonEncode(widget.students[i].toJson()));
-
-          // Переходим на страницу с предметами
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  SubjectsFutureBuilder(student: widget.students[i])));
-          setState(() {
-            wrongUser = false;
-          });
-          break;
-        } else {
-          setState(() {
-            wrongUser = true;
-          });
-        }
-      }
-    }
-  }
-
-  // Widget для вывода информации об ошибке
-  Widget errorMessage() {
-    if (wrongUser) {
-      return Center(
-          child: Container(
-              child: Text('Неверный логин или пароль!',
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontFamily: 'San Francisco',
-                      fontSize: 14.0))));
+    if (res.statusCode == 200) {
+      print('authorized!');
+      Map<String, dynamic> data = jsonDecode(res.body);
+      return data;
+    } else if (res.statusCode == 400) {
+      print('Wrong username or password');
     } else {
-      return SizedBox();
+      print('unexpected error');
     }
+
+    return null;
   }
 
   @override
@@ -202,14 +137,43 @@ class LoginState extends State<Login> {
                             ],
                           ),
                           SizedBox(height: 15.0),
-                          errorMessage(),
                           Container(
                             width: double.infinity,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 15.0),
                             child: RaisedButton(
-                              onPressed: () => logIn(usernameController.text,
-                                  passwordController.text),
+                              onPressed: () async {
+                                String username = usernameController.text
+                                    .trim()
+                                    .toLowerCase();
+                                String password =
+                                    passwordController.text.trim();
+
+                                var res = await login(username, password);
+
+                                if (res != null &&
+                                    username != '' &&
+                                    password != '') {
+                                  SharedPreferences sharedPreferences =
+                                      await SharedPreferences.getInstance();
+                                  sharedPreferences.setString(
+                                      "student_data", jsonEncode(res));
+                                  Student student = Student(
+                                      studentID: res['student_id'],
+                                      subject: res['subject'],
+                                      username: res['usernmae']);
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Subjects(
+                                                student: student,
+                                                subjects: res['subject'],
+                                              )));
+                                } else {
+                                  alertDialog('Ошибка при авторизации',
+                                      'Неверный логин или пароль', context);
+                                }
+                              },
                               padding: EdgeInsets.all(10.0),
                               color: Colors.black87,
                               splashColor: splashColor,

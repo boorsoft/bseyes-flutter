@@ -1,16 +1,17 @@
 import 'dart:convert';
 
 import 'package:bseyes/models/subject_model.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubjectsService {
   final String subjectsUrl =
       "https://bseyes-restapi--akmatoff.repl.co/api/subjects"; // Ссылка на API, на страницу subjects
 
-  final String token = DotEnv().env['TOKEN'];
-
   Future<List<Subject>> getSubjects() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("TOKEN");
+
     // Описываем функцию, async должен быть потому что типа не может сразу выполняться, надо подождать
     Response res = await get(
         // await здесь обязателен, типа нужно дождаться ответа

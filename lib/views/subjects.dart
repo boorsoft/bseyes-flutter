@@ -105,8 +105,7 @@ class SubjectsState extends State<Subjects> {
                   logOut();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              LoginFutureBuilder()),
+                          builder: (BuildContext context) => Login()),
                       (Route<dynamic> route) => false);
                 },
                 child: FaIcon(

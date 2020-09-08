@@ -32,12 +32,11 @@ class _AppState extends State<App> {
       });
     } else {
       // Сохраненные данные о студенте в sharedPrefs в JSON
-      var studentLoad = jsonDecode(sharedPreferences.getString("student"));
+      var studentLoad = jsonDecode(sharedPreferences.getString("student_data"));
       // Переводим в объект класса Student
       student = Student(
           studentID: studentLoad['student_id'],
           username: studentLoad['username'],
-          password: studentLoad['password'],
           subject: studentLoad['subject']);
       setState(() {
         loggedIn = true;
@@ -50,7 +49,7 @@ class _AppState extends State<App> {
     if (loggedIn) {
       return SubjectsFutureBuilder(student: student);
     } else {
-      return LoginFutureBuilder();
+      return Login();
     }
   }
 
