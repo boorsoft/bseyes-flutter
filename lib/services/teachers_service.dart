@@ -17,7 +17,7 @@ class TeachersService {
     Response res = await get(teachersUrl, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": "Token $token"
+      "Authorization": token
     });
 
     if (res.statusCode == 200) {

@@ -36,7 +36,7 @@ class _SubjectsFutureBuilderState extends State<SubjectsFutureBuilder> {
                 // Если в снапшоте есть данные
                 subjects = snapshot
                     .data; // Создаем список и присваиваем данные snapshot
-                return Subjects(subjects: subjects, student: widget.student);
+                return Subjects(student: widget.student);
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(
@@ -59,10 +59,9 @@ class _SubjectsFutureBuilderState extends State<SubjectsFutureBuilder> {
 }
 
 class Subjects extends StatefulWidget {
-  final List<dynamic> subjects;
   final Student student;
 
-  Subjects({this.subjects, this.student});
+  Subjects({this.student});
 
   @override
   SubjectsState createState() => SubjectsState();
@@ -75,7 +74,6 @@ class SubjectsState extends State<Subjects> {
   @override
   void initState() {
     super.initState();
-    print(widget.student.subject);
     // sortSubjects();
   }
 

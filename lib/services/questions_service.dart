@@ -14,7 +14,7 @@ class QuestionsService {
     Response res = await get(questionsUrl, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": "Token $token"
+      "Authorization": token
     });
 
     if (res.statusCode == 200) {

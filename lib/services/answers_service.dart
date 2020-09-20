@@ -12,7 +12,7 @@ class AnswersService {
     Response res = await post(answersURL, body: answer, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": "Token $token"
+      "Authorization": token
     });
 
     if (res.statusCode == 201) {

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:bseyes/models/subject_model.dart';
 import 'package:bseyes/widgets/form-text-input.dart';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
@@ -114,11 +113,13 @@ class LoginState extends State<Login> {
                                         studentID: res['student_id'],
                                         subject: res['subject'],
                                         username: res['username']);
-                                    print('Subjects' + res['subject']);
+
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Subjects(student: student)));
+                                                Subjects(
+                                                  student: student,
+                                                )));
                                   } else {
                                     alertDialog('Ошибка при авторизации',
                                         'Неверный логин или пароль', context);

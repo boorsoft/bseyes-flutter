@@ -19,7 +19,7 @@ class SubjectsService {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": "Token $token"
+          "Authorization": token
         }); // В переменную res с типом данных Response (т.е ответ) вводим функцию get, он по URL выполняет запрос
 
     // Если успешно получили ответ
