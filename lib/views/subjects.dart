@@ -59,7 +59,7 @@ class _SubjectsFutureBuilderState extends State<SubjectsFutureBuilder> {
 }
 
 class Subjects extends StatefulWidget {
-  final List<Subject> subjects;
+  final List<dynamic> subjects;
   final Student student;
 
   Subjects({this.subjects, this.student});
@@ -70,23 +70,24 @@ class Subjects extends StatefulWidget {
 
 class SubjectsState extends State<Subjects> {
   SharedPreferences sharedPreferences;
-  List<Subject> studentSubjects = [];
+  // List<Subject> studentSubjects = [];
 
   @override
   void initState() {
     super.initState();
-    sortSubjects();
+    print(widget.student.subject);
+    // sortSubjects();
   }
 
   // Функция для сортировки предметов по студентам
-  List<Subject> sortSubjects() {
-    for (int i = 0; i < widget.subjects.length; i++) {
-      if (widget.student.subject.contains(widget.subjects[i].subjectID)) {
-        studentSubjects.add(widget.subjects[i]);
-      }
-    }
-    return studentSubjects;
-  }
+  // List<Subject> sortSubjects() {
+  //   for (int i = 0; i < widget.subjects.length; i++) {
+  //     if (widget.student.subject.contains(widget.subjects[i].subjectID)) {
+  //       studentSubjects.add(widget.subjects[i]);
+  //     }
+  //   }
+  //   return studentSubjects;
+  // }
 
   logOut() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -130,7 +131,7 @@ class SubjectsState extends State<Subjects> {
                           width: double.infinity,
                           // Эта штука работает типа как for
                           child: ListView.builder(
-                              itemCount: studentSubjects
+                              itemCount: widget.student.subject
                                   .length, // количество элементов = размер списка subjects
                               itemBuilder: (BuildContext context, int i) {
                                 // строим контекст и создаем переменную i для обозначения индексов элементов
@@ -158,18 +159,16 @@ class SubjectsState extends State<Subjects> {
                                               splashColor: splashColor,
                                               onTap: () => Navigator.of(context)
                                                   .push(MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          TeachersFutureBuilder(
-                                                              subject:
-                                                                  studentSubjects[
-                                                                      i]))),
+                                                      builder: (context) => TeachersFutureBuilder(
+                                                          subject: widget
+                                                              .student
+                                                              .subject[i]))),
                                               child: Container(
                                                   alignment: Alignment.center,
                                                   height: 150.0,
                                                   child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                          MainAxisAlignment.center,
                                                       children: [
                                                         FaIcon(
                                                             FontAwesomeIcons
@@ -179,7 +178,9 @@ class SubjectsState extends State<Subjects> {
                                                                 0xFFB2B2B2)),
                                                         SizedBox(width: 10.0),
                                                         Text(
-                                                            studentSubjects[i]
+                                                            widget
+                                                                .student
+                                                                .subject[i]
                                                                 .subName,
                                                             style:
                                                                 defaultTextStyleWhiteBold)

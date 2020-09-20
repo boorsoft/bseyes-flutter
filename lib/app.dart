@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'models/subject_model.dart';
 import 'views/subjects.dart';
 import 'views/login.dart';
 import 'style.dart';
@@ -26,18 +27,21 @@ class _AppState extends State<App> {
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
     // Если нет записи в sharedPrefs, значит не авторизован
-    if (sharedPreferences.getBool("logged_in") == null) {
+    if (sharedPreferences.getString("student_data") == null) {
       setState(() {
         loggedIn = false;
       });
     } else {
       // Сохраненные данные о студенте в sharedPrefs в JSON
       var studentLoad = jsonDecode(sharedPreferences.getString("student_data"));
+      List<dynamic> subjects = studentLoad['subject']
+          .map((dynamic item) => Subject.fromJson(item))
+          .toList();
       // Переводим в объект класса Student
       student = Student(
           studentID: studentLoad['student_id'],
           username: studentLoad['username'],
-          subject: studentLoad['subject']);
+          subject: subjects);
       setState(() {
         loggedIn = true;
       });

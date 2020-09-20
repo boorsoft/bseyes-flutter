@@ -8,7 +8,7 @@ import '../models/teacher_model.dart';
 
 class TeachersService {
   final String teachersUrl =
-      "https://bseyes-restapi--akmatoff.repl.co/api/teachers";
+      "https://bseyes-restapi.boorsoft.repl.co/api/teachers";
 
   Future<List<Teacher>> getTeachers() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

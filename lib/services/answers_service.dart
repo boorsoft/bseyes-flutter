@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AnswersService {
   final String answersURL =
-      "http://bseyes-restapi--akmatoff.repl.co/api/answers/";
+      "https://bseyes-restapi.boorsoft.repl.co/api/answers/";
 
   Future<void> addAnswer(var answer) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

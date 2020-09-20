@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SubjectsService {
   final String subjectsUrl =
-      "https://bseyes-restapi--akmatoff.repl.co/api/subjects"; // Ссылка на API, на страницу subjects
+      "https://bseyes-restapi.boorsoft.repl.co/api/subjects"; // Ссылка на API, на страницу subjects
 
   Future<List<Subject>> getSubjects() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
