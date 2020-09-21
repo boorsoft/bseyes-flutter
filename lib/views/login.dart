@@ -86,10 +86,13 @@ class LoginState extends State<Login> {
                       fit: BoxFit.fill)),
             ),
             Center(
-                heightFactor: 9.0,
+                heightFactor: 5.3,
                 child: Text('Глазами Студента',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 35.0,
+                      letterSpacing: 1.0,
+                      fontFamily: 'Pacifico',
                       color: defaultTextColor,
                     )))
           ],

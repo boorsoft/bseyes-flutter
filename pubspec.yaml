@@ -72,6 +72,9 @@ flutter:
       fonts:
         - asset: assets/fonts/Ubuntu-Regular.ttf
         - asset: assets/fonts/Ubuntu-Bold.ttf
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
