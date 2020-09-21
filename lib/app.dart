@@ -63,6 +63,8 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         home: home(),
         theme: ThemeData(
-            primaryColor: primaryColor, scaffoldBackgroundColor: Colors.white));
+            primaryColor: primaryColor,
+            scaffoldBackgroundColor: bgColor,
+            fontFamily: 'Ubuntu'));
   }
 }

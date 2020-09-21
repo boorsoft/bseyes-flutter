@@ -5,7 +5,7 @@ import '../models/question_model.dart';
 
 class QuestionsService {
   final String questionsUrl =
-      "https://bseyes-restapi.boorsoft.repl.co/api/questions/";
+      "https://bseyes-restapi.boorsoft.repl.co/api/questions";
 
   Future<List<Question>> getQuestions() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
