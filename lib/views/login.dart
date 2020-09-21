@@ -1,9 +1,11 @@
 import 'dart:convert';
-import 'package:bseyes/models/subject_model.dart';
-import 'package:bseyes/widgets/form-text-input.dart';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
+
+import 'package:bseyes/models/subject_model.dart';
+import 'package:bseyes/widgets/form-text-input.dart';
 import 'package:bseyes/widgets/widgets.dart';
 import 'package:bseyes/style.dart';
 import 'subjects.dart';
@@ -25,6 +27,7 @@ class LoginState extends State<Login> {
 
   final formKey = GlobalKey<FormState>();
   bool wrongUser = false;
+  double formMaxHeight = 370.0;
 
   // Send username and password to the server
   Future<Map<String, dynamic>> login(String username, String password) async {
@@ -52,14 +55,49 @@ class LoginState extends State<Login> {
   }
 
   @override
+  void didChangeDependencies() {
+    KeyboardVisibilityNotification().addNewListener(onChange: (bool visible) {
+      setState(() {
+        // Change max height of form if keyboard is open or closed
+        if (visible)
+          formMaxHeight = 553.1;
+        else
+          formMaxHeight = 370.0;
+      });
+
+      print('Visible: $visible');
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Expanded(child: Container()),
+        Expanded(
+            child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/LoginScreenUI.png'),
+                      fit: BoxFit.fill)),
+            ),
+            Center(
+                heightFactor: 9.0,
+                child: Text('Глазами Студента',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: defaultTextColor,
+                    )))
+          ],
+        )),
         Container(
             padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
-            constraints: BoxConstraints(minHeight: 200.0, maxHeight: 400.0),
+            constraints:
+                BoxConstraints(minHeight: 200.0, maxHeight: formMaxHeight),
             decoration: BoxDecoration(color: primaryColor),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -67,6 +105,8 @@ class LoginState extends State<Login> {
                 Form(
                     key: formKey,
                     child: Column(children: <Widget>[
+                      Text('Вход', style: defaultTextStyleWhiteBold),
+                      SizedBox(height: 20.0),
                       Row(
                         children: [
                           Padding(
@@ -81,7 +121,7 @@ class LoginState extends State<Login> {
                           )
                         ],
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: 20.0),
                       Row(
                         children: [
                           Padding(
@@ -96,7 +136,7 @@ class LoginState extends State<Login> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: 20.0),
                       Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(

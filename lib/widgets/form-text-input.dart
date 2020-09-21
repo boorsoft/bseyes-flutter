@@ -14,6 +14,8 @@ Widget formTextInput(String labelText, TextEditingController controller,
           decoration: InputDecoration(
             enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: splashColor)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: splashColor)),
             labelStyle: TextStyle(color: splashColor),
             labelText: labelText,
           )));
