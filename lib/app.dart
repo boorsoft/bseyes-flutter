@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/subject_model.dart';
-import 'views/subjects.dart';
-import 'views/login.dart';
+import 'screens/subjects.dart';
+import 'screens/login.dart';
 import 'style.dart';
 import 'models/student_model.dart';
 
@@ -51,7 +51,7 @@ class _AppState extends State<App> {
   // Выводить страницу с предметами или страницу авторизации
   Widget home() {
     if (loggedIn) {
-      return SubjectsFutureBuilder(student: student);
+      return Subjects(student: student);
     } else {
       return Login();
     }

@@ -1,5 +1,6 @@
 import 'package:bseyes/style.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/subject_model.dart';
 import '../models/teacher_model.dart';
 import '../models/question_model.dart';
@@ -39,7 +40,8 @@ class _PollsFutureBuilderState extends State<PollsFutureBuilder> {
               } else if (snapshot.hasError) {
                 // Если возникла ошибка
                 return Center(
-                  child: Text('Не удалось загрузить данные...'),
+                  child: Text('Не удалось загрузить данные...',
+                      style: defaultTextStyle),
                 );
               } else {
                 // Если данные еще не загрузились
@@ -49,7 +51,9 @@ class _PollsFutureBuilderState extends State<PollsFutureBuilder> {
                   children: <Widget>[
                     Center(child: CircularProgressIndicator()),
                     SizedBox(height: 30.0),
-                    Center(child: Text('Идёт загрузка данных...'))
+                    Center(
+                        child: Text('Идёт загрузка данных...',
+                            style: defaultTextStyle))
                   ],
                 );
               }
@@ -141,12 +145,17 @@ class PollState extends State<Poll> {
     return Padding(
         padding: EdgeInsets.all(5.0),
         child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
             child: MaterialButton(
-              child: Text(option, style: defaultTextStyleWhiteBold),
+              child: Text(option,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: !buttons[option] ? primaryColor : bgColor)),
               onPressed: () => chooseOption(option),
               minWidth: 40.0,
-              color: !buttons[option] ? primaryColor : splashColor,
+              padding: const EdgeInsets.all(18.0),
+              color: !buttons[option] ? secondaryColor : primaryColor,
               splashColor: splashColor,
             )));
   }
@@ -155,13 +164,15 @@ class PollState extends State<Poll> {
   Widget nextButton() {
     if (choiceMade) {
       return ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(18.0)),
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
           child: MaterialButton(
               child: Text('Дальше', style: defaultTextStyleWhiteBold),
               onPressed: () => nextQuestion(),
-              minWidth: 80.0,
+              minWidth: 150.0,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 13.5),
               disabledColor: disabledColor,
-              color: Theme.of(context).primaryColor,
+              color: secondaryColor,
               splashColor: splashColor));
     } else {
       return SizedBox();
@@ -171,48 +182,56 @@ class PollState extends State<Poll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            centerTitle: true, title: Text('Опрос', style: headerTextStyle)),
-        body: Container(
-            color: primaryColor,
-            child: SingleChildScrollView(
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25.0),
-                            topRight: Radius.circular(25.0))),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 50.0),
-                        Container(
-                          alignment: Alignment.center,
-                          constraints: BoxConstraints(minHeight: 150.0),
-                          child: Text(widget.questions[qNum].question,
-                              style: defaultTextStyle),
-                        ),
-                        SizedBox(height: 70.0),
-                        Container(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              "1 - Абсолютно не согласен, 5 - Полностью согласен",
-                              style: defaultTextStyle,
-                              textAlign: TextAlign.center,
-                            )),
-                        SizedBox(height: 10.0),
-                        Wrap(
-                          children: <Widget>[
-                            optionButton("1"),
-                            optionButton("2"),
-                            optionButton("3"),
-                            optionButton("4"),
-                            optionButton("5")
-                          ],
-                        ),
-                        SizedBox(height: 50.0),
-                        nextButton()
-                      ],
-                    )))));
+        body: SafeArea(
+      child: SingleChildScrollView(
+          child: Column(
+        children: <Widget>[
+          Container(
+              height: 60.0,
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: FaIcon(FontAwesomeIcons.arrowLeft,
+                          color: primaryColor),
+                      iconSize: 18.0,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    Text('Опрос',
+                        textAlign: TextAlign.center,
+                        style: defaultTextStyleWhiteBold),
+                  ])),
+          SizedBox(height: 50.0),
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            constraints: BoxConstraints(minHeight: 150.0),
+            child:
+                Text(widget.questions[qNum].question, style: defaultTextStyle),
+          ),
+          SizedBox(height: 70.0),
+          Container(
+              padding: EdgeInsets.all(5.0),
+              child: Text(
+                "1 - Абсолютно не согласен, 5 - Полностью согласен",
+                style: defaultTextStyle,
+                textAlign: TextAlign.center,
+              )),
+          SizedBox(height: 10.0),
+          Wrap(
+            children: <Widget>[
+              optionButton("1"),
+              optionButton("2"),
+              optionButton("3"),
+              optionButton("4"),
+              optionButton("5")
+            ],
+          ),
+          SizedBox(height: 50.0),
+          nextButton()
+        ],
+      )),
+    ));
   }
 }
