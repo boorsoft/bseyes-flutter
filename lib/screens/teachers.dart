@@ -106,8 +106,9 @@ class TeachersState extends State<Teachers> {
                         iconSize: 18.0,
                         onPressed: () => Navigator.of(context).pop(),
                       ),
-                      Text('Преподаватели',
+                      Text(widget.subject.subName,
                           textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
                           style: defaultTextStyleWhiteBold),
                     ])),
             Expanded(
@@ -138,9 +139,9 @@ class TeachersState extends State<Teachers> {
                                   height: 60.0,
                                   padding: const EdgeInsets.all(20.0),
                                   child: Text(
-                                      subTeachers[i].firstName +
+                                      subTeachers[i].lastName +
                                           " " +
-                                          subTeachers[i].middleName,
+                                          subTeachers[i].firstName,
                                       style: defaultTextStyleWhiteBold)))),
                     ));
               }),

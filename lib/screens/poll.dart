@@ -198,8 +198,12 @@ class PollState extends State<Poll> {
                       iconSize: 18.0,
                       onPressed: () => Navigator.of(context).pop(),
                     ),
-                    Text('Опрос',
+                    Text(
+                        widget.teacher.lastName +
+                            ' ' +
+                            widget.teacher.firstName,
                         textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
                         style: defaultTextStyleWhiteBold),
                   ])),
           SizedBox(height: 50.0),
